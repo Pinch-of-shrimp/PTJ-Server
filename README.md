@@ -77,7 +77,11 @@ $db['default']['dsn'] = 'pgsql:host=localhost;port=5432;dbname=database_name';
 ## CodeIgniter Resources
 
 [User Guide](https://codeigniter.com/docs)
+
 [Language File Translations](https://github.com/bcit-ci/codeigniter3-translations)
+
 [Community Forums](http://forum.codeigniter.com/)
+
 [Community Wiki](https://github.com/bcit-ci/CodeIgniter/wiki)
+
 [Community IRC](https://webchat.freenode.net/?channels=%23codeigniter)
