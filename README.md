@@ -1,7 +1,9 @@
 # PTJ-Server - An Android RESTful server writen in PHP CodeIgniter
 
 Build status:
-![](https://img.shields.io/scrutinizer/build/g/filp/whoops.svg)![](https://img.shields.io/hexpm/l/plug.svg)![](https://img.shields.io/github/license/mashape/apistatus.svg)
+![](https://img.shields.io/scrutinizer/build/g/filp/whoops.svg)
+![](https://img.shields.io/hexpm/l/plug.svg)
+![](https://img.shields.io/github/license/mashape/apistatus.svg)
 
 ## Features:
 * Login and register
