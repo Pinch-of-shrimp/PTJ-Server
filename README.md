@@ -2,7 +2,6 @@
 
 Build status:
 ![](https://img.shields.io/scrutinizer/build/g/filp/whoops.svg)
-![](https://img.shields.io/hexpm/l/plug.svg)
 ![](https://img.shields.io/github/license/mashape/apistatus.svg)
 
 ## Features:
