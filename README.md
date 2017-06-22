@@ -29,6 +29,7 @@ If you use the MAMP or MAMP PRO, you can put your project in /Applications/MAMP/
 3.Open the application/config/config.php file with a text editor and set your base URL. If you intend to use encryption or sessions, set your encryption key.
 
 If you use the MAMP or MAMP PRO, you can put your project in /Applications/MAMP/htdocs, then you can set your base URL. 
+
 For example:
 
 ```php
@@ -37,6 +38,8 @@ $config['base_url'] = 'http://localhost:8888/PTJ-Server/';
 ---
 
 4.If you intend to use a database, open the application/config/database.php file with a text editor and set your database settings.
+
+For example:
 
 ```php
 $db['default'] = array(
