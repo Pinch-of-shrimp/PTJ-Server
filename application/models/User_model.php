@@ -2,6 +2,26 @@
 
 <!--  PHP PDO  -->
 
+<!-- CREATE TABLE users (
+    sno int(11) NOT NULL AUTO_INCREMENT,
+    unique_id varchar(23) NOT NULL,
+    name varchar(50) NOT NULL,
+    email varchar(50) NOT NULL,
+    encrypted_password varchar(256) NOT NULL,
+    salt varchar(10) NOT NULL,
+    created_at datetime DEFAULT NULL,
+    PRIMARY KEY (sno)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;-->
+
+<!-- CREATE TABLE password_reset_request (
+sno int(11) NOT NULL AUTO_INCREMENT,
+email varchar(50) NOT NULL,
+encrypted_temp_password varchar(256) NOT NULL,
+salt varchar(10) NOT NULL,
+created_at datetime DEFAULT NULL,
+PRIMARY KEY (sno)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8; -->
+
 <?php
 
 class User_model extends CI_Model {
@@ -20,37 +40,36 @@ public function insertData($name, $email, $password) {
 	$encrypted_password = $hash["encrypted"];
 	$salt = $hash["salt"];
 
-	// $sql = 'INSERT INTO users SET unique_id =:unique_id, name =:name,
-	// email =:email, encrypted_password =: encrypted_password, salt =:salt, create_at = NOW()';
+	$sql = 'INSERT INTO users SET unique_id =:unique_id, name =:name,
+	email =:email, encrypted_password =: encrypted_password, salt =:salt, create_at = NOW()';
+	$query = $this->db->prepare($sql);
+	$query->execute(array('unique_id' => $unique_id, ':name' => $name, ':email' => $email,
+		':encrypted_password' => $encrypted_password, ':salt' => $salt));
 
-	// $query = $this->conn->prepare($sql);
-	// $query->execute(array('unique_id' => $unique_id, ':name' => $name, ':email' => $email,
-	// 	':encrypted_password' => $encrypted_password, ':salt' => $salt));
-
-	// if ($query) {
-	// 	return true;
-	// }
-	// else {
-	// 	return false;
-	// }
-	$data = array(
-		'unique_id' => $unique_id,
-		'name' => $name);
-	$this->db->insert('users', $data);
-
-	if ($this->db->errno == 0) {
+	if ($query) {
 		return true;
 	}
 	else {
 		return false;
 	}
+	// $data = array(
+	// 	'unique_id' => $unique_id,
+	// 	'name' => $name);
+	// $this->db->insert('users', $data);
+
+	// if ($this->db->errno == 0) {
+	// 	return true;
+	// }
+	// else {
+	// 	return false;
+	// }
 }
 
 // 登录验证
 public function checkLogin($email, $password) {
 
 	$sql = 'SELECT * FROM users WHERE email =:email';
-	$query = $this->conn->prepare($sql);
+	$query = $this->db->prepare($sql);
 	$query->execute(array(':email' => $email));
 	$data = $query->fetchObject();
 	$salt = $data->salt;
@@ -75,7 +94,7 @@ public function changePassword($email, $password) {
 	$salt = $hash["salt"];
 
 	$sql = 'UPDATE users SET encrypted_password = :encrypted_password, salt = :salt WHERE email = :email;';
-	$query = $this->conn->prepare($sql);
+	$query = $this->db->prepare($sql);
 	$query->execute(array(':email' => $email, ':encrypted_password' => $encrypted_password, ':salt' => $salt));
 
 	if ($query) {
@@ -94,14 +113,14 @@ public function passwordResetRequest($email) {
 	$salt = $hash["salt"];
 
 	$sql = 'SELECT COUNT(*) from password_reset_request WHERE email =:email';
-	$query = $this->conn->prepare($sql);
+	$query = $this->db->prepare($sql);
 	$query->execute(array('eamil' => $email));
 
 	if ($query) {
 		$row_count = $query->fetchColumn();
 		if ($row_count == 0) {
 			$insert_sql = 'INSERT INTO password_reset_request SET email =:email, encrypted_temp_password =:encrypted_password, salt =:salt, create_at =:create_at';
-			$insert_query = $this->conn->prepare($insert_sql);
+			$insert_query = $this->db->prepare($insert_sql);
 			$insert_query->execute(array(':email' => $email, ':encrypted_temp_password' => $encrypted_temp_password, ':salt' => $salt, ':create_at' => date("Y-m-d H:i:s")));
 
 			if ($insert_query) {
@@ -115,7 +134,7 @@ public function passwordResetRequest($email) {
 		}
 		else {
 			$update_sql = 'UPDATE INTO password_reset_request SET email =:email, encrypted_temp_password =:encrypted_password, salt =:salt, create_at =:create_at';
-			$update_query = $this->conn->prepare($insert_sql);
+			$update_query = $this->db->prepare($insert_sql);
 			$update_query->execute(array(':email' => $email, ':encrypted_temp_password' => $encrypted_temp_password, ':salt' => $salt, ':create_at' => date("Y-m-d H:i:s")));
 
 			if ($update_query) {
@@ -137,7 +156,7 @@ public function passwordResetRequest($email) {
 public function resetPassword($email, $password, $code) {
 
 	$sql = 'SELECT * FROM password_reset_request WHERE email =:email';
-	$query = $this->conn->prepare($sql);
+	$query = $this->db->prepare($sql);
 	$query->execute(array(':email' => $eamil));
 	$date = $query->fetchObject();
 	$salt = $data->salt;
@@ -165,7 +184,7 @@ public function resetPassword($email, $password, $code) {
 public function checkUserExist($email) {
 
 	$sql = 'SELECT COUNT(*) from users WHERE email =: email';
-	$query = $this->conn->prepare($sql);
+	$query = $this->db->prepare($sql);
 	$query->execute(array('email' => $email));
 
 	if ($query) {

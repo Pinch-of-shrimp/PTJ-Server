@@ -398,7 +398,7 @@ if ( ! function_exists('auto_link'))
 			// Set our target HTML if using popup links.
 			$target = ($popup) ? ' target="_blank"' : '';
 
-			// We process the links in reverse order (last -> first) so that
+			// We process the links in reverse order (last->first) so that
 			// the returned string offsets from preg_match_all() are not
 			// moved as we add more HTML.
 			foreach (array_reverse($matches) as $match)

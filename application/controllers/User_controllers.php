@@ -1,16 +1,17 @@
 <?php
 class User extends CI_Controller {
 
-private $db;
-private $mail;
+// private $db;
+// private $mail;
 
 public function __construct() {
 	parent::__construct();
 	$this->load->model('User_model');
+	$this->load->library('email');
 }
 
 public function regiserUser($name, $email, $password) {
-	$db = $this->db;
+	$db = $this->User_model->db;
 
 	if (!empty($name) && !empty($email) && !empty(password)) {
 		if ($db->checkUserExist($email)) {
@@ -39,7 +40,7 @@ public function regiserUser($name, $email, $password) {
 }
 
 public function loginUser($email, $password) {
-	$db = $this->db;
+	$db = $this->User_model->db;
 
 	if (!empty($email) && !empty($password)) {
 		if ($db->checkUserExist($email)) {
@@ -60,6 +61,7 @@ public function loginUser($email, $password) {
 		else {
 			$response["result"] = "failure";
 			$response["message"] = "用户不存在";
+			return json_encode($response);
 		}
 	}
 	else {
@@ -68,7 +70,7 @@ public function loginUser($email, $password) {
 }
 
 public function changePassword($email, $old_password, $new_password, $new_password_verify) {
-	$db = $this->db;
+	$db = $this->User_model->db;
 
 	if (!empty($email) && !empty($old_password) && !empty($new_password) && $new_password_verify == new_password) {
 		if (!$db->checkLogin($email, $old_password)) {
@@ -97,7 +99,7 @@ public function changePassword($email, $old_password, $new_password, $new_passwo
 }
 
 public function resetPasswordRequest($email) {
-	$db = $this->db;
+	$db = $this->User_model->db;
 
 	if ($db->checkUserExist($email)) {
 		$result = $db->passwordResetRequest($email);
@@ -130,7 +132,7 @@ public function resetPasswordRequest($email) {
 }
 
 public function resetPassword($email, $password, $code) {
-	$db = $this->db;
+	$db = $this->User_model->db;
 
 	if ($db->checkUserExist($email)) {
 		$result = $db->resetPassword($email, $password, $code);
@@ -154,14 +156,54 @@ public function resetPassword($email, $password, $code) {
 }
 
 public function sendEmail($email, $temp_password) {
-	$mail = $this->mail;
-	$mail->isSMTP();
-	$mail->Host = 'smtp.163.com';
-	$mail->SMTPAuth = true;
-	$mail->Username = '';
-	$mail->Password = '';
-	$mail->SMTPSecure = 'ssl';
-	$mail->Port = 465;
+	$mail = $this->email;
+
+	$config['protocol'] = 'smtp';
+	$config['smtp_host'] = 'smtp.163.com';
+	$config['smtp_user'] = 'ptj_server@163.com';
+	$config['smtp_pass'] = 'ptj_server67';
+	$config['smtp_crypto'] = 'ssl';
+	$config['smtp_port'] = 456;
+	$config['wrapchars'] = 50;
+	$config['mailtype'] = 'html';
+
+	mail->initialize($config);
+
+
+	$mail->from('ptj_server@163.com', 'ptj_server');
+	$mail->reply_to('ptj_server@163.com', 'ptj_server');
+	$mail->to($emial);
+
+	$mail->subject('Password Reset Request');
+	$mail->message('Hi,<br><br> Your password reset code is <b>'.$temp_password.'</b> . This code expires in 120 seconds. Enter this code within 120 seconds to reset your password.')
+
+	if (!mail->send()) {
+		return $mail->errno;
+	}
+	else {
+		return true;
+	}
 }
+
+public function isEmailValid($email) {
+	return filter_var($email, FILTER_VALIDATE_EMAIL);
+}
+
+public function getMsgParamNotEmpty() {
+	$response["result"] = "failure";
+	$response["message"] = "输入不能为空！";
+	return json_encode($response);
+}
+
+public function getMsgInvalidParam() {
+	$response["result"] = "failure";
+	$response["message"] = "格式不正确！";
+	return json_encode($response);
+}
+
+public function getMsgInvalidEmail() {
+	$response["result"] = "failure";
+	$response["message"] = "邮箱不存在！";
+	return json_encode($response);
 }
 }
