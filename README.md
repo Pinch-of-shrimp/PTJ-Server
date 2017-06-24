@@ -24,11 +24,11 @@ The server is installed in four steps:
 
 2.Upload the CodeIgniter folders and files to your server. Normally the index.php file will be at your root.
 
-If you use the MAMP or MAMP PRO, you can put your project in /Applications/MAMP/htdocs.
+>If you use the MAMP or MAMP PRO, you can put your project in /Applications/MAMP/htdocs.
 
 3.Open the application/config/config.php file with a text editor and set your base URL. If you intend to use encryption or sessions, set your encryption key.
 
-If you use the MAMP or MAMP PRO, you can put your project in /Applications/MAMP/htdocs, then you can set your base URL. 
+>If you use the MAMP or MAMP PRO, you can put your project in /Applications/MAMP/htdocs, then you can set your base URL. 
 
 For example:
 
