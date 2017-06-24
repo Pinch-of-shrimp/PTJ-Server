@@ -177,7 +177,7 @@ public function resetPassword($email, $password, $code) {
 		}
 	}
 	else {
-		return false;]
+		return false;
 	}
 }
 
