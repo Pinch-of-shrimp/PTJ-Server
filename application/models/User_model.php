@@ -23,6 +23,7 @@ PRIMARY KEY (sno)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8; -->
 
 <?php
+defined('BASEPATH') OR exit('No direct script access allowed');
 
 class User_model extends CI_Model {
 
