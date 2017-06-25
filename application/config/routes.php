@@ -53,6 +53,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 // $route['login'] = 'user/login';
 // $route['chgPass'] = 'user/changePassword';
 
-$route['default_controller'] = 'main';
+$route['default_controller'] = 'welcome';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
