@@ -8,7 +8,7 @@ public function __construct() {
 	$this->load->database();
 }
 
-// 注册用户->测试成功
+// 插入用户->测试成功
 public function insertData($name, $email, $password) {
 
 	$unique_id = uniqid('', true);
@@ -28,6 +28,93 @@ public function insertData($name, $email, $password) {
 	}
 	else {
 		return false;
+	}
+}
+
+// 注册用户请求
+
+public function registerRequest($email) {
+
+	$random_string = substr(str_shuffle(str_repeat("0123456789abcdefghijklmnopqrstuvwxyz", 6)), 0, 6);
+	$hash = $this->getHash($random_string);
+	$encrypted_temp_password = $hash["encrypted"];
+	$salt = $hash["salt"];
+
+	$this->db->select('*');
+	$this->db->from('register_request');
+	$this->db->where('email', $email);
+	$query = $this->db->get();
+
+	if ($query) {
+		$row_count = $query->num_rows();
+		if ($row_count == 0) {
+
+			$insert_data = array('email' => $email,
+								 'encrypted_temp_password' => $encrypted_temp_password, 
+								 'salt' => $salt,
+								 'created_at' => date("Y-m-d H:i:s"));
+
+			$insert_query = $this->db->insert('register_request', $insert_data);
+
+			if ($insert_query) {
+				$user["email"] = $email;
+				$user["temp_password"] = $random_string;
+				return $user;
+			}
+			else {
+				return false;
+			}
+		}
+		else {
+
+			$update_data = array('email' => $email, 
+				  				 'encrypted_temp_password' => $encrypted_temp_password,
+				  				 'salt' => $salt,
+				  				 'created_at' => date("Y-m-d H:i:s"));
+			$update_query = $this->db->update('register_request', $update_data);
+			if ($update_query) {
+				$user["email"] = $email;
+				$user["temp_password"] = $random_string;
+				return $user;
+			}
+			else {
+				return false;
+			}
+		}
+	}
+	else {
+		return false;
+	}
+}
+
+// 注册用户
+public function registerUser($name, $email, $password, $code) {
+
+	$this->db->select('*');
+	$this->db->from('register_request');
+	$this->db->where('email', $email);
+	$query = $this->db->get();
+
+	foreach ($query->result() as $row) {
+		$salt = $row->salt;
+		$db_encrypted_temp_password = $row->encrypted_temp_password;
+
+		if ($this->verifyHash($code.$salt, $db_encrypted_temp_password)) {
+			$old = new DateTime($row->created_at);
+			$now = new DateTime(date("Y-m-d H:i:s"));
+			$diff = $now->getTimestamp() - $old->getTimestamp();
+
+			// 需要在300s以内输入验证码
+			if ($diff < 300000) {
+				return $this->insertData($name, $email, $password);
+			}
+			else {
+				return false;
+			}
+		}
+		else {
+			return false;
+		}
 	}
 }
 
@@ -168,10 +255,12 @@ public function checkUserExist($email) {
 	$this->db->where('email', $email);
 	$query = $this->db->get();
 	if ($query && $query->num_rows() > 0) {
+		// 邮箱已经被注册
 		return true;
 	}
 	else {
 		return false;
+
 	}
 }
 

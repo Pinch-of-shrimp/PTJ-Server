@@ -9,25 +9,59 @@ class User extends CI_Controller {
 		$this->load->library('email');
 	}
 
-	public function registerUser($name, $email, $password) {
 
-		if (!empty($name) && !empty($email) && !empty($password)) {
+	public function registerRequest($email) {
+
+		if ($this->User_model->checkUserExist($email)) {
+			$response["result"] = "failure";
+			$response["message"] = urlencode("邮箱已被注册");
+			return urldecode(json_encode($response));
+		}
+		else {
+			$result = $this->User_model->registerRequest($email);
+
+			if (!$result) {
+				$response["result"] = "failure";
+				$response["message"] = urlencode("注册用户失败");
+				return urldecode(json_encode($response));
+			}
+			else {
+				$mail_result = $this->sendEmail($result["email"], $result["temp_password"]);
+
+				if ($mail_result) {
+					$response["result"] = "success";
+					$response["message"] = urlencode("请检查你的邮箱验证码");
+					return urldecode(json_encode($response));
+				}
+				else {
+					$response["result"] = "failure";
+					$response["message"] = urlencode("注册用户失败，请检查你的网络");
+					return urldecode(json_encode($response));
+				}
+			}
+		}
+	}
+
+	public function registerUser($name, $email, $password, $code) {
+
+		if (!empty($name) && !empty($email) && !empty($password) && !empty($code)) {
 			if ($this->User_model->checkUserExist($email)) {
 				$response["result"] = "failure";
 				$response["message"] = urlencode("邮箱已被注册");
 				return urldecode(json_encode($response));
 			}
 			else {
-				$result = $this->User_model->insertData($name, $email, $password);
+				$result = $this->User_model->registerUser($name, $email, $password, $code);
 
-				if ($result) {
-					$response["result"] = "success";
-					$response["message"] = urlencode("用户注册成功");
+				if (!$result) {
+					$response["result"] = "failure";
+					$response["message"] = urlencode("注册用户失败");
 					return urldecode(json_encode($response));
+
 				}
 				else {
-				$response["result"] = "failure";
-				$response["message"] = urlencode("注册失败，请检查你的网络");
+				$response["result"] = "success";
+				$response["message"] = urlencode("注册成功");
 				return urldecode(json_encode($response));
 				}
 			}
@@ -36,6 +70,7 @@ class User extends CI_Controller {
 			return $this->getMsgParamNotEmpty();
 		}
 	}
+
 
 	public function loginUser($email, $password) {
 
@@ -160,7 +195,7 @@ class User extends CI_Controller {
 		$config = array(
 			'protocol' => 'smtp',
 			'smtp_host' => 'smtp.163.com',
-			'smtp_user' => '18670511267@163.com',
+			'smtp_user' => 'ptj_server@163.com',
 			'smtp_pass' =>'kelele67',
 			'smtp_crypto' => 'ssl',
 			'smtp_port' => 465,
@@ -170,8 +205,8 @@ class User extends CI_Controller {
 
 		$this->load->library('email', $config);
 
-		$this->email->from('18670511267@163.com', 'ptj_server');
-		$this->email->reply_to('18670511267@163.com', 'ptj_server');
+		$this->email->from('ptj_server@163.com', 'ptj_server');
+		$this->email->reply_to('ptj_server@163.com', 'ptj_server');
 		$this->email->to($email);
 
 		$this->email->subject('Password Reset Request');
@@ -215,26 +250,35 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	if (isset($data->operation)) {
 		$operation = $data->operation;
 		if (!empty($operation)) {
-			if($operation == 'register') {
-				if(isset($data->user) && !empty($data->user) && isset($data->user->name) && isset($data->user->email) && isset($data->user->password)) {
+			if ($operation == 'registerReq') {
+				if(isset($data->user) && !empty($data->user) &&isset($data->user->email)){
 					$user = $data->user;
-					$name = $user->name;
 					$email = $user->email;
-					$password = $user->password;
-					if ($fun->isEmailValid($email)) {
-						echo $fun->registerUser($name, $email, $password);
-						exit;
-					} 
-					else {
-						echo $fun->getMsgInvalidEmail();
-						exit;
-					}
+					echo $fun->registerRequest($email);
+					exit;
 				} 
 				else {
 					echo $fun->getMsgInvalidParam();
 					exit;
 				}
 			}
+
+			else if ($operation == 'registerUser') {
+				if(isset($data->user) && !empty($data->user) && isset($data->user->name) && !empty($data->user->name) && isset($data->user->email) && isset($data->user->password) && isset($data->user->code)) {
+					$user = $data->user;
+					$name = $user->name;
+					$email = $user->email;
+					$code = $user->code;
+					$password = $user->password;
+					echo $fun->registerUser($name, $email, $password, $code);
+					exit;
+				} 
+				else {
+					echo $fun->getMsgInvalidParam();
+					exit;
+				}
+			}
+
 			else if ($operation == 'login') {
 				if(isset($data->user) && !empty($data->user) && isset($data->user->email) && isset($data->user->password)) {
 					$user = $data->user;
@@ -247,7 +291,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 					echo $fun->getMsgInvalidParam();
 					exit;
 				}
-			} 
+			}
+
 			else if ($operation == 'chgPass') {
 				if(isset($data->user) && !empty($data->user) && isset($data->user->email) && isset($data->user->old_password) && isset($data->user->new_password)) {
 					$user = $data->user;
@@ -264,6 +309,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 					exit;
 				}
 			}
+
 			else if ($operation == 'resPassReq') {
 				if(isset($data->user) && !empty($data->user) &&isset($data->user->email)){
 					$user = $data->user;
@@ -276,6 +322,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 					exit;
 				}
 			}
+
 			else if ($operation == 'resPass') {
 				if(isset($data->user) && !empty($data->user) && isset($data->user->email) && isset($data->user->password) && isset($data->user->code)) {
 					$user = $data->user;
@@ -290,7 +337,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 					exit;
 				}
 			}
-		}
+		}	
 		else {		
 			echo $fun->getMsgParamNotEmpty();
 			exit;
