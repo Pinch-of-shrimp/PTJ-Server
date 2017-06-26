@@ -9,7 +9,11 @@ class User extends CI_Controller {
 		$this->load->library('email');
 	}
 
-
+	/**
+	 * 注册请求响应
+	 * @param  string $email 
+	 * @return string(json) 注: HTTP通信中并不存在所谓的json，而是将string转成json罢了        
+	 */
 	public function registerRequest($email) {
 
 		if ($this->User_model->checkUserExist($email)) {
@@ -42,6 +46,14 @@ class User extends CI_Controller {
 		}
 	}
 
+	/**
+	 * 注册用户响应
+	 * @param  string $name     
+	 * @param  string $email    
+	 * @param  string $password 
+	 * @param  string $code     邮箱收到的验证码
+	 * @return string(json)          
+	 */
 	public function registerUser($name, $email, $password, $code) {
 
 		if (!empty($name) && !empty($email) && !empty($password) && !empty($code)) {
@@ -71,7 +83,12 @@ class User extends CI_Controller {
 		}
 	}
 
-
+	/**
+	 * 用户登录响应
+	 * @param  string $email    
+	 * @param  string $password 
+	 * @return string(json)           
+	 */
 	public function loginUser($email, $password) {
 
 		if (!empty($email) && !empty($password)) {
@@ -101,6 +118,14 @@ class User extends CI_Controller {
 		}
 	}
 
+	/**
+	 * 修改密码响应
+	 * @param  string $email               
+	 * @param  string $old_password        
+	 * @param  string $new_password        
+	 * @param  string $new_password_verify 
+	 * @return string(json)                      
+	 */
 	public function changePassword($email, $old_password, $new_password, $new_password_verify) {
 		if ($new_password_verify == $new_password) {
 			if (!empty($email) && !empty($old_password) && !empty($new_password)) {
@@ -135,6 +160,11 @@ class User extends CI_Controller {
 		}
 	}
 
+	/**
+	 * 重设密码请求响应
+	 * @param  string $email 
+	 * @return string(json)        
+	 */
 	public function resetPasswordRequest($email) {
 
 		if ($this->User_model->checkUserExist($email)) {
@@ -167,6 +197,13 @@ class User extends CI_Controller {
 		}
 	}
 
+	/**
+	 * 重设密码响应
+	 * @param  string $email    
+	 * @param  string $password 
+	 * @param  string $code     邮箱收到的验证码
+	 * @return string(json)
+	 */
 	public function resetPassword($email, $password, $code) {
 
 		if ($this->User_model->checkUserExist($email)) {
@@ -190,6 +227,12 @@ class User extends CI_Controller {
 		}
 	}
 
+	/**
+	 * 发送邮件
+	 * @param  string $email         
+	 * @param  string $temp_password 验证码
+	 * @return boolean                
+	 */
 	public function sendEmail($email, $temp_password) {
 
 		$config = array(
@@ -208,7 +251,6 @@ class User extends CI_Controller {
 		$this->email->from('ptj_server@163.com', 'ptj_server');
 		$this->email->reply_to('ptj_server@163.com', 'ptj_server');
 		$this->email->to($email);
-
 		$this->email->subject('Password Reset Request');
 		$this->email->message('Hi,<br><br> Your password reset code is <b>'.$temp_password.'</b> . This code expires in 120 seconds. Enter this code within 120 seconds to reset your password.');
 
@@ -220,22 +262,39 @@ class User extends CI_Controller {
 		}
 	}
 
+	/**
+	 * 验证邮箱是否合法
+	 * @param  string  $email 
+	 * @return boolean        
+	 */
 	public function isEmailValid($email) {
 		return filter_var($email, FILTER_VALIDATE_EMAIL);
 	}
 
+	/**
+	 * 输入为空
+	 * @return string(json) 
+	 */
 	public function getMsgParamNotEmpty() {
 		$response["result"] = "failure";
 		$response["message"] = urlencode("输入不能为空");
 		return urldecode(json_encode($response));
 	}
 
+	/**
+	 * 输入格式错误
+	 * @return string(json)
+	 */
 	public function getMsgInvalidParam() {
 		$response["result"] = "failure";
 		$response["message"] = urlencode("格式不正确");
 		return urldecode(json_encode($response));
 	}
 
+	/**
+	 * 邮箱格式错误
+	 * @return string(json)
+	 */
 	public function getMsgInvalidEmail() {
 		$response["result"] = "failure";
 		$response["message"] = urlencode("邮箱不存在");
@@ -243,6 +302,9 @@ class User extends CI_Controller {
 	}
 }
 
+/**
+ * 因为是之前写的，所以用到PHP原生的input数据流
+ */
 $fun = new User();
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {

@@ -8,7 +8,13 @@ public function __construct() {
 	$this->load->database();
 }
 
-// 插入用户->测试成功
+/**
+ * 插入用户数据
+ * @param  string $name     
+ * @param  string $email    
+ * @param  string $password 
+ * @return boolean           
+ */
 public function insertData($name, $email, $password) {
 
 	$unique_id = uniqid('', true);
@@ -32,7 +38,11 @@ public function insertData($name, $email, $password) {
 }
 
 // 注册用户请求
-
+/**
+ * 注册用户请求
+ * @param  string $email 
+ * @return boolean        
+ */
 public function registerRequest($email) {
 
 	$random_string = substr(str_shuffle(str_repeat("0123456789abcdefghijklmnopqrstuvwxyz", 6)), 0, 6);
@@ -87,7 +97,14 @@ public function registerRequest($email) {
 	}
 }
 
-// 注册用户
+/**
+ * 注册用户
+ * @param  string $name     
+ * @param  string $email    
+ * @param  string $password 
+ * @param  string $code     邮箱收到的验证码
+ * @return boolean           
+ */
 public function registerUser($name, $email, $password, $code) {
 
 	$this->db->select('*');
@@ -118,7 +135,12 @@ public function registerUser($name, $email, $password, $code) {
 	}
 }
 
-// 登录验证->测试成功
+/**
+ * 登录验证
+ * @param  string $email    
+ * @param  string $password 
+ * @return boolean           
+ */
 public function checkLogin($email, $password) {
 
 	$this->db->select('*');
@@ -141,7 +163,12 @@ public function checkLogin($email, $password) {
 	}
 }
 
-// 更新密码->测试成功
+/**
+ * 更新密码
+ * @param  string $email    
+ * @param  string $password 
+ * @return boolean           
+ */
 public function changePassword($email, $password) {
 
 	$hash = $this->getHash($password);
@@ -161,7 +188,11 @@ public function changePassword($email, $password) {
 	}
 }
 
-// 找回密码请求->测试成功
+/**
+ * 找回密码请求
+ * @param  string $email 
+ * @return boolean       
+ */
 public function passwordResetRequest($email) {
 
 	$random_string = substr(str_shuffle(str_repeat("0123456789abcdefghijklmnopqrstuvwxyz", 6)), 0, 6);
@@ -216,7 +247,13 @@ public function passwordResetRequest($email) {
 	}
 }
 
-// 找回密码->测试成功
+/**
+ * 找回密码
+ * @param  string $email    
+ * @param  string $password 
+ * @param  string $code     邮箱接收到的验证码
+ * @return boolean           
+ */
 public function resetPassword($email, $password, $code) {
 
 	$this->db->select('*');
@@ -247,7 +284,11 @@ public function resetPassword($email, $password, $code) {
 	}
 }
 
-// 通过查找邮箱来检查用户是否注册过->测试成功
+/**
+ * 查找邮箱来检查用户是否注册过
+ * @param  string $email 
+ * @return boolean       
+ */
 public function checkUserExist($email) {
 
 	$this->db->select('*');
@@ -264,7 +305,12 @@ public function checkUserExist($email) {
 	}
 }
 
-// 返回哈希加密后的密码
+
+/**
+ * 返回哈希加密后的密码
+ * @param  string $password 
+ * @return string $hash        哈希加密后的密码
+ */
 public function getHash($password) {
 
 	$salt = sha1(rand());
@@ -275,7 +321,12 @@ public function getHash($password) {
 	return $hash;
 }
 
-// 检查密码是否匹配，用于登录验证
+/**
+ * 检查密码是否匹配，用于登录验证
+ * @param  string $password 
+ * @param  string $hash     
+ * @return boolean          
+ */
 public function verifyHash($password, $hash) {
 	return password_verify($password, $hash);
 }
