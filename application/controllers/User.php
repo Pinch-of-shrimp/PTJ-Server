@@ -30,7 +30,7 @@ class User extends CI_Controller {
 				return urldecode(json_encode($response));
 			}
 			else {
-				$mail_result = $this->sendEmail($result["email"], $result["temp_password"]);
+				$mail_result = $this->sendEmail($result["email"], $result["temp_password"], 'Register');
 
 				if ($mail_result) {
 					$response["result"] = "success";
@@ -176,7 +176,7 @@ class User extends CI_Controller {
 				return urldecode(json_encode($response));
 			}
 			else {
-				$mail_result = $this->sendEmail($result["email"], $result["temp_password"]);
+				$mail_result = $this->sendEmail($result["email"], $result["temp_password"], 'ResetPas');
 
 				if ($mail_result) {
 					$response["result"] = "success";
@@ -233,7 +233,7 @@ class User extends CI_Controller {
 	 * @param  string $temp_password 验证码
 	 * @return boolean                
 	 */
-	public function sendEmail($email, $temp_password) {
+	public function sendEmail($email, $temp_password, $type) {
 
 		$config = array(
 			'protocol' => 'smtp',
@@ -241,8 +241,8 @@ class User extends CI_Controller {
 			'smtp_user' => 'ptj_server@163.com',
 			'smtp_pass' =>'kelele67',
 			'smtp_crypto' => 'ssl',
-			'smtp_port' => 465,
-			'wrapchars' => 50,
+			'smtp_port' => '465',
+			'wrapchars' => '50',
 			'mailtype' => 'html'
 			);
 
@@ -251,8 +251,15 @@ class User extends CI_Controller {
 		$this->email->from('ptj_server@163.com', 'ptj_server');
 		$this->email->reply_to('ptj_server@163.com', 'ptj_server');
 		$this->email->to($email);
-		$this->email->subject('Password Reset Request');
-		$this->email->message('Hi,<br><br> Your password reset code is <b>'.$temp_password.'</b> . This code expires in 120 seconds. Enter this code within 120 seconds to reset your password.');
+		if ($type == 'Register') {
+			$this->email->subject('欢迎注册');
+			$this->email->message('你好!<br><br> 感谢你注册撮虾子。<br><br> 你的验证码是'.$temp_password.'</b> 。 验证码有效期为5分钟，请在5分钟内完成验证。');
+		}
+		else if ($type == 'ResetPas'){
+			$this->email->subject('重置你的密码');
+			$this->email->message('尊敬的用户,<br><br> 找回你的密码 <br><br> 你的验证码是 <b>'.$temp_password.'</b> 。 验证码有效期为5分钟，请在5分钟内完成验证。');
+		}
+
 
 		if ($this->email->send()) {
 			return true;

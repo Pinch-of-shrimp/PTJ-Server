@@ -49,10 +49,10 @@ class Infor extends CI_Controller {
 		}
 	}
 
-	public function nearbyJob($city, $district) {
-		if ($this->Infor_model->checkCity($city) && $this->Infor_model->checkDistrict($district)){
+	public function nearbyJob($province, $city) {
+		if ($this->Infor_model->checkCity($city) && $this->Infor_model->checkCity($city)){
 
-			$result = $this->Infor_model->nearbyJob($city, $district);
+			$result = $this->Infor_model->nearbyJob($province, $city);
 
 			if ($result) {
 				$resonse["result"] = "success";
@@ -73,10 +73,10 @@ class Infor extends CI_Controller {
 		}
 	}
 
-	public function weekendJob($city, $district) {
-		if ($this->Infor_model->checkCity($city) && $this->Infor_model->checkDistrict($district)){
+	public function weekendJob($province, $city) {
+		if ($this->Infor_model->checkProvince($province) && $this->Infor_model->checkCity($city)){
 
-			$result = $this->Infor_model->weekendJob($city, $district);
+			$result = $this->Infor_model->weekendJob($province, $city);
 
 			if ($result) {
 				$resonse["result"] = "success";
@@ -97,9 +97,9 @@ class Infor extends CI_Controller {
 		}
 	}
 
-	public function recommendJob($city, $district) {
-		if ($this->Infor_model->checkCity($city) && $this->Infor_model->checkDistrict($district)) {
-			$result = $this->Infor_model->recommendJob($city, $district);
+	public function recommendJob($province, $city) {
+		if ($this->Infor_model->checkProvince($province) && $this->Infor_model->checkCity($city)) {
+			$result = $this->Infor_model->recommendJob($province, $city);
 
 			if ($result) {
 				$resonse["result"] = "success";
@@ -140,27 +140,27 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 			}
 
 			else if ($search == 'nearJob') {
-				if(isset($data->city) && !empty($data->city) && isset($data->district) && !empty($data->district)) {
+				if(isset($data->province) && !empty($data->province) && isset($data->city) && !empty($data->city)) {
+					$province = $data->province;
 					$city = $data->city;
-					$district = $data->district;
-					echo $fun->nearbyJob($city, $district);
+					echo $fun->nearbyJob($province, $city);
 					exit;
 				}
 			}
 
 			else if ($search == 'weekendJob') {
-				if(isset($data->city) && !empty($data->city) && isset($data->district) && !empty($data->district)) {
+				if(isset($data->province) && !empty($data->province) && isset($data->city) && !empty($data->city)) {
+					$province = $data->province;
 					$city = $data->city;
-					$city = $data->district;
-					echo $fun->weekendJob($city, $district);
+					echo $fun->weekendJob($province, $city);
 					exit;
 			}
 
 			else if ($search == 'recommendJob') {
-				if(isset($data->city) && !empty($data->city) && isset($data->district) && !empty($data->district)) {
+				if(isset($data->province) && !empty($data->province) && isset($data->city) && !empty($data->city)) {
+					$province = $data->province;
 					$city = $data->city;
-					$city = $data->district;
-					echo $fun->recommendJob($city, $district);
+					echo $fun->recommendJob($province, $city);
 					exit;	
 			}
 		}

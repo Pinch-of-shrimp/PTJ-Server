@@ -14,7 +14,7 @@
 
 // ------------------------------------------------------------------------
 
-class Order_model extends MY_Model{
+class Order_model extends CI_Model{
     function __construct() {
         parent::__construct();
     }

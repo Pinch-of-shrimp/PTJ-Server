@@ -10,8 +10,8 @@ class Push extends CI_Controller {
 
 	public function single_notification() {
 
-		// $this->JPush->single_push('you are the one', 1141, 3, 1);
-		$this->JPush->single_push($content, $uid, $type, $id);
+		$this->JPush->single_push('you are the one', 1141, 3, 1);
+		// $this->JPush->single_push($content, $uid, $type, $id);
 	}
 
 	public function group_notification() {
