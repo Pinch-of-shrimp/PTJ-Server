@@ -37,7 +37,6 @@ class User_model extends CI_Model {
 		}
 	}
 
-	// 注册用户请求
 	/**
 	 * 注册用户请求
 	 * @param  string $email 
@@ -62,7 +61,7 @@ class User_model extends CI_Model {
 				$insert_data = array('email' => $email,
 									 'encrypted_temp_password' => $encrypted_temp_password, 
 									 'salt' => $salt,
-									 'created_at' => date("Y-m-d H:i:s"));
+									 'cratetime' => date("Y-m-d H:i:s"));
 
 				$insert_query = $this->db->insert('register_request', $insert_data);
 
@@ -80,7 +79,7 @@ class User_model extends CI_Model {
 				$update_data = array('email' => $email, 
 					  				 'encrypted_temp_password' => $encrypted_temp_password,
 					  				 'salt' => $salt,
-					  				 'created_at' => date("Y-m-d H:i:s"));
+					  				 'cratetime' => date("Y-m-d H:i:s"));
 				$update_query = $this->db->update('register_request', $update_data);
 				if ($update_query) {
 					$user["email"] = $email;
@@ -117,12 +116,12 @@ class User_model extends CI_Model {
 			$db_encrypted_temp_password = $row->encrypted_temp_password;
 
 			if ($this->verifyHash($code.$salt, $db_encrypted_temp_password)) {
-				$old = new DateTime($row->created_at);
+				$old = new DateTime($row->cratetime);
 				$now = new DateTime(date("Y-m-d H:i:s"));
 				$diff = $now->getTimestamp() - $old->getTimestamp();
 
 				// 需要在300s以内输入验证码
-				if ($diff < 300) {
+				if ($diff < 300000) {
 					return $this->insertData($name, $email, $password);
 				}
 				else {
@@ -212,7 +211,7 @@ class User_model extends CI_Model {
 				$insert_data = array('email' => $email,
 									 'encrypted_temp_password' => $encrypted_temp_password, 
 									 'salt' => $salt,
-									 'created_at' => date("Y-m-d H:i:s"));
+									 'cratetime' => date("Y-m-d H:i:s"));
 
 				$insert_query = $this->db->insert('password_reset_request', $insert_data);
 
@@ -230,7 +229,7 @@ class User_model extends CI_Model {
 				$update_data = array('email' => $email, 
 					  				 'encrypted_temp_password' => $encrypted_temp_password,
 					  				 'salt' => $salt,
-					  				 'created_at' => date("Y-m-d H:i:s"));
+					  				 'cratetime' => date("Y-m-d H:i:s"));
 				$update_query = $this->db->update('password_reset_request', $update_data);
 				if ($update_query) {
 					$user["email"] = $email;
@@ -266,12 +265,12 @@ class User_model extends CI_Model {
 			$db_encrypted_temp_password = $row->encrypted_temp_password;
 
 			if ($this->verifyHash($code.$salt, $db_encrypted_temp_password)) {
-				$old = new DateTime($row->created_at);
+				$old = new DateTime($row->cratetime);
 				$now = new DateTime(date("Y-m-d H:i:s"));
 				$diff = $now->getTimestamp() - $old->getTimestamp();
 
 				// 需要在300s以内输入验证码
-				if ($diff < 300) {
+				if ($diff < 300000) {
 					return $this->changePassword($email, $password);
 				}
 				else {

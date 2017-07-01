@@ -5,7 +5,6 @@ class Infor extends CI_Controller {
 
 	public function __construct() {
 		parent::__construct();
-		// $this->load->model('User_model');
 		$this->load->model('Infor_model');
 	}
 
@@ -73,10 +72,10 @@ class Infor extends CI_Controller {
 		}
 	}
 
-	public function weekendJob($province, $city) {
+	public function weekendJob($province, $city, $worktype) {
 		if ($this->Infor_model->checkProvince($province) && $this->Infor_model->checkCity($city)){
 
-			$result = $this->Infor_model->weekendJob($province, $city);
+			$result = $this->Infor_model->weekendJob($province, $city, $worktype);
 
 			if ($result) {
 				$resonse["result"] = "success";
@@ -157,16 +156,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 			}
 
 			else if ($search == 'recommendJob') {
-				if(isset($data->province) && !empty($data->province) && isset($data->city) && !empty($data->city)) {
+				if(isset($data->province) && !empty($data->province) && isset($data->city) && !empty($data->city) && isset($data->worktype) && !empty($data->worktype)) {
 					$province = $data->province;
 					$city = $data->city;
-					echo $fun->recommendJob($province, $city);
+					$worktype = $data->worktype;
+					echo $fun->recommendJob($province, $city, $worktype);
 					exit;	
 			}
 		}
 	}
 }
 else if ($_SERVER['REQUEST_METHOD'] == 'GET') {
-	echo "主页";
+	echo "撮虾子主页";
 	exit;
 }
