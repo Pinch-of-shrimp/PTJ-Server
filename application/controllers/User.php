@@ -1,12 +1,17 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
+// include_once("libraries/PHPMailer/class.smtp.php");       // 引入php邮件类  
+// include_once("libraries/PHPMailer/class.phpmailer.php");
+
 class User extends CI_Controller {
 
 	public function __construct() {
 		parent::__construct();
 		$this->load->model('User_model');
-		$this->load->library('email');
+		$this->load->library('Mailer');
+		// $this->load->library('PHPMailer/');
+
 	}
 
 	/**
@@ -30,7 +35,7 @@ class User extends CI_Controller {
 				return urldecode(json_encode($response));
 			}
 			else {
-				$mail_result = $this->sendEmail($result["email"], $result["temp_password"], 'Register');
+				$mail_result = $this->mailer->sendMail($result["email"], $result["temp_password"], 'Register');
 
 				if ($mail_result) {
 					$response["result"] = "success";
@@ -176,7 +181,7 @@ class User extends CI_Controller {
 				return urldecode(json_encode($response));
 			}
 			else {
-				$mail_result = $this->sendEmail($result["email"], $result["temp_password"], 'ResetPas');
+				$mail_result = $this->Mailer->sendMail($result["email"], $result["temp_password"], 'ResetPas');
 
 				if ($mail_result) {
 					$response["result"] = "success";
@@ -224,48 +229,6 @@ class User extends CI_Controller {
 			$response["result"] = "failure";
 			$response["message"] = urlencode("邮箱不存在");
 			return urldecode(json_encode($response));
-		}
-	}
-
-	/**
-	 * 发送邮件
-	 * @param  string $email         
-	 * @param  string $temp_password 验证码
-	 * @return boolean                
-	 */
-	public function sendEmail($email, $temp_password, $type) {
-
-		$config = array(
-			'protocol' => 'smtp',
-			'smtp_host' => 'smtp.163.com',
-			'smtp_user' => 'ptj_server@163.com',
-			'smtp_pass' =>'kelele67',
-			'smtp_crypto' => 'ssl',
-			'smtp_port' => '465',
-			'wrapchars' => '50',
-			'mailtype' => 'html'
-			);
-
-		$this->load->library('email', $config);
-
-		$this->email->from('ptj_server@163.com', 'ptj_server');
-		$this->email->reply_to('ptj_server@163.com', 'ptj_server');
-		$this->email->to($email);
-		if ($type == 'Register') {
-			$this->email->subject('欢迎注册');
-			$this->email->message('你好!<br><br> 感谢你注册撮虾子。<br><br> 你的验证码是'.$temp_password.'</b> 。 验证码有效期为5分钟，请在5分钟内完成验证。');
-		}
-		else if ($type == 'ResetPas'){
-			$this->email->subject('重置你的密码');
-			$this->email->message('尊敬的用户,<br><br> 找回你的密码 <br><br> 你的验证码是 <b>'.$temp_password.'</b> 。 验证码有效期为5分钟，请在5分钟内完成验证。');
-		}
-
-
-		if ($this->email->send()) {
-			return true;
-		}
-		else {
-			return false;
 		}
 	}
 
@@ -323,8 +286,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 				if(isset($data->user) && !empty($data->user) &&isset($data->user->email)){
 					$user = $data->user;
 					$email = $user->email;
-					echo $fun->registerRequest($email);
-					exit;
+
+					if ($fun->isEmailValid($email)) {
+						echo $fun->registerRequest($email);
+						exit;
+					}
+					else {
+						echo $fun->getMsgInvalidEmail();
+						exit;
+					}
 				} 
 				else {
 					echo $fun->getMsgInvalidParam();
@@ -340,7 +310,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 					$code = $user->code;
 					$password = $user->password;
 					echo $fun->registerUser($name, $email, $password, $code);
-					exit;
+					exit;				
 				} 
 				else {
 					echo $fun->getMsgInvalidParam();
