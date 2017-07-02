@@ -8,10 +8,13 @@ class Infor extends CI_Controller {
 		$this->load->model('Infor_model');
 	}
 
+<<<<<<< HEAD
 	/**
 	 * 查询全部兼职
 	 * @return string
 	 */
+=======
+>>>>>>> a210618dee26a23c9dff3a3b063be0ab341066bc
 	public function allJob() {
 		$result = $this->Infor_model->allJob();
 
@@ -154,7 +157,11 @@ $fun = new Infor();
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	$data = json_decode(file_get_contents("php://input"));
+<<<<<<< HEAD
 	if (isset($data->operation)) {
+=======
+	if (isset($data->search)) {
+>>>>>>> a210618dee26a23c9dff3a3b063be0ab341066bc
 		$operation = $data->operation;
 		if (!empty($operation)) {
 			if ($operation == 'hotJob') {
@@ -189,8 +196,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 					$city = $data->city;
 					$worktype = $data->worktype;
 					echo $fun->recommendJob($province, $city, $worktype);
+<<<<<<< HEAD
 					exit;	
 				}
+=======
+					exit;
+				}	
+>>>>>>> a210618dee26a23c9dff3a3b063be0ab341066bc
 			}
 		}
 	}

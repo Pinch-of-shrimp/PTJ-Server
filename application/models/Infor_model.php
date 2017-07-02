@@ -48,7 +48,11 @@ class Infor_model extends CI_Model {
 			foreach ($query->result() as $row) {
 				$hotJob["city"] = $row->lv_city;
 				$hotJob["job"] = $row->lv_title;
+<<<<<<< HEAD
 				array_push($result, $hotJob);
+=======
+				//return $hotJob;
+>>>>>>> a210618dee26a23c9dff3a3b063be0ab341066bc
 			}
 			return $result;
 		}
@@ -102,11 +106,15 @@ class Infor_model extends CI_Model {
 			foreach ($query->result() as $row) {
 				$recommendJob["province"] = $row->lv_province;
 				$recommendJob["city"] = $row->lv_city;
-				$recommendJob["city"] = $row->lv_worktype;
+				$recommendJob["worktype"] = $row->lv_worktype;
 				$recommendJob["job"] = $row->lv_title;
 				array_push($result, $recommendJob);
 			}
+<<<<<<< HEAD
 			return $result;
+=======
+			return array_rand($recommendJob, 2);
+>>>>>>> a210618dee26a23c9dff3a3b063be0ab341066bc
 		}
 		else {
 			return false;
@@ -160,6 +168,7 @@ class Infor_model extends CI_Model {
 			return false;
 		}
 	}
+<<<<<<< HEAD
 
 	/**
 	 * 检查该省是否有兼职信息
@@ -170,12 +179,19 @@ class Infor_model extends CI_Model {
 		$this->db->select('*');
 		$this->db->from('jobinformation');
 		$this->db->where('lv_province', $province);
+=======
+	public function checkCity($city) {
+		$this->db->select('*');
+		$this->db->from('jobinformation');
+		$this->db->where('lv_city', $city);
+>>>>>>> a210618dee26a23c9dff3a3b063be0ab341066bc
 		$query = $this->db->get();
 		if ($query && $query->num_rows() > 0) {
 			return true;
 		}
 		else {
 			return false;
+<<<<<<< HEAD
 
 		}
 	}
@@ -189,13 +205,24 @@ class Infor_model extends CI_Model {
 		$this->db->select('*');
 		$this->db->from('jobinformation');
 		$this->db->where('lv_city', $city);
+=======
+		}
+	}
+	public function checkProvince($province) {
+		$this->db->select('*');
+		$this->db->from('jobinformation');
+		$this->db->where('lv_province', $province);
+>>>>>>> a210618dee26a23c9dff3a3b063be0ab341066bc
 		$query = $this->db->get();
 		if ($query && $query->num_rows() > 0) {
 			return true;
 		}
 		else {
 			return false;
+<<<<<<< HEAD
 
+=======
+>>>>>>> a210618dee26a23c9dff3a3b063be0ab341066bc
 		}
 	}
 }
