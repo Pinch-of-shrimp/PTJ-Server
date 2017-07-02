@@ -26,7 +26,8 @@ class User_model extends CI_Model {
 					  'name' => $name, 
 					  'email' => $email,
 					  'encrypted_password' => $encrypted_password, 
-					  'salt' => $salt);
+					  'salt' => $salt
+					  'createtime' = NOW());
 		$query = $this->db->insert('users', $data);
 
 		if ($query) {
