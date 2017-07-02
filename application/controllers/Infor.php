@@ -8,7 +8,7 @@ class Infor extends CI_Controller {
 		$this->load->model('Infor_model');
 	}
 
-	public funciton allJob() {
+	public function allJob() {
 		$result = $this->Infor_model->allJob();
 
 		if ($result) {
@@ -117,9 +117,6 @@ class Infor extends CI_Controller {
 			$resonse["message"] = urlencode("该地区暂时没有兼职信息");
 			return urldecode(json_encode($response));
 		}
-
-			}
-		}
 	}
 }
 
@@ -128,9 +125,9 @@ $fun = new Infor();
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	$data = json_decode(file_get_contents("php://input"));
 	if (isset($data->search)) {
-		$search = $data->search;
-		if (!empty($search)) {
-			if ($search == 'hotJob') {
+		$operation = $data->operation;
+		if (!empty($operation)) {
+			if ($operation == 'hotJob') {
 				if(isset($data->city) && !empty($data->city)) {
 					$city = $data->city;
 					echo $fun->hotJob($city);
@@ -138,7 +135,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 				}
 			}
 
-			else if ($search == 'nearJob') {
+			else if ($operation == 'nearJob') {
 				if(isset($data->province) && !empty($data->province) && isset($data->city) && !empty($data->city)) {
 					$province = $data->province;
 					$city = $data->city;
@@ -147,21 +144,23 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 				}
 			}
 
-			else if ($search == 'weekendJob') {
+			else if ($operation == 'weekendJob') {
 				if(isset($data->province) && !empty($data->province) && isset($data->city) && !empty($data->city)) {
 					$province = $data->province;
 					$city = $data->city;
 					echo $fun->weekendJob($province, $city);
 					exit;
+				}
 			}
 
-			else if ($search == 'recommendJob') {
+			else if ($operation == 'recommendJob') {
 				if(isset($data->province) && !empty($data->province) && isset($data->city) && !empty($data->city) && isset($data->worktype) && !empty($data->worktype)) {
 					$province = $data->province;
 					$city = $data->city;
 					$worktype = $data->worktype;
 					echo $fun->recommendJob($province, $city, $worktype);
-					exit;	
+					exit;
+				}	
 			}
 		}
 	}

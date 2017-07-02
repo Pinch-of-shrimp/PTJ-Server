@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class User_model extends CI_Model {
+class Infor_model extends CI_Model {
 
 	public function __construct() {
 		parent::__construct();
@@ -23,6 +23,7 @@ class User_model extends CI_Model {
 			foreach ($query->result() as $row) {
 				$hotJob["city"] = $row->lv_city;
 				$hotJob["job"] = $row->lv_title;
+				//return $hotJob;
 			}
 			return $hotJob;
 		}
@@ -66,10 +67,10 @@ class User_model extends CI_Model {
 			foreach ($query->result() as $row) {
 				$recommendJob["province"] = $row->lv_province;
 				$recommendJob["city"] = $row->lv_city;
-				$recommendJob["city"] = $row->lv_worktype;
+				$recommendJob["worktype"] = $row->lv_worktype;
 				$recommendJob["job"] = $row->lv_title;
 			}
-			return array_rand($recommendJob, 10);
+			return array_rand($recommendJob, 2);
 		}
 		else {
 			return false;
@@ -105,6 +106,30 @@ class User_model extends CI_Model {
 		if($week == "0" || $week == "6") {
 			return true;
 		} 
+		else {
+			return false;
+		}
+	}
+	public function checkCity($city) {
+		$this->db->select('*');
+		$this->db->from('jobinformation');
+		$this->db->where('lv_city', $city);
+		$query = $this->db->get();
+		if ($query && $query->num_rows() > 0) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+	public function checkProvince($province) {
+		$this->db->select('*');
+		$this->db->from('jobinformation');
+		$this->db->where('lv_province', $province);
+		$query = $this->db->get();
+		if ($query && $query->num_rows() > 0) {
+			return true;
+		}
 		else {
 			return false;
 		}
