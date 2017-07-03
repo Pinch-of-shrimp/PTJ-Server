@@ -9,16 +9,15 @@ class WxUser_model extends CI_Model {
 	}
 
 	public function registerWxUser($WxData) {
-		
-		$data = array('unique_id' => $unique_id, 
-					  'name' => $name, 
-					  'email' => $email,
-					  'encrypted_password' => $encrypted_password, 
-					  'salt' => $salt);
-		$query = $this->db->insert('users', $data);
-
+		$result = array();
+		$query = $this->db->insert('users', $WxData);
 		if ($query) {
-			return true;
+			foreach ($query->result() as $row) {
+				$wxUser["id"] = $row->unique_id;
+				$wxUser["name"] = $row->name;
+				array_push($result, $wxUser);
+			}
+			return $result;
 		}
 		else {
 			return false;

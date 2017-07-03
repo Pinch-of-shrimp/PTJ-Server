@@ -17,8 +17,8 @@ class WxUser extends CI_Controller {
 			'name' => $WxUser->nickname,
 			'sex' => $WxUser->sex,
 			'province' => $WxUser->province,
-			'city' = $WxUser->city,
-			'avatar' = $WxUser->headimgurl
+			'city' => $WxUser->city,
+			'picture' => $WxUser->headimgurl
 			);
 		$result = $ThreeLogin_model->registerWxUser($WxData);
 		if ($result) {
