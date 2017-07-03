@@ -20,7 +20,7 @@ class WxLogin extends CI_Controller {
 			'city' => $WxUser->city,
 			'picture' => $WxUser->headimgurl
 			);
-		$result = $ThreeLogin_model->registerWxUser($WxData);
+		$result = $WxLogin_model->registerWxUser($WxData);
 		if ($result) {
 			$response["result"] = "success";
 			$response["message"] = urlencode("微信登录成功");
@@ -47,4 +47,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 			}
 		}
 	}
+}
+else if ($_SERVER['REQUEST_METHOD'] == 'GET') {
+	echo "微信登录";
+	exit;
 }
