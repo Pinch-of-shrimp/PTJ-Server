@@ -6,12 +6,12 @@ class WxLogin extends CI_Controller {
 	public function __construct() {
 		parent::__construct();
 		// $this->load->model('User_model');
-		$this->load->model('WxUser_model');
-		$this->load->library('Wx_library');
+		$this->load->model('WxLogin_model');
+		$this->load->library('Wx_library', null, 'wx');
 	}
 
 	public function registerWxUser() {
-		$WxUser = $this->Wx_library->getWxUser();
+		$WxUser = $this->wx->getWxUser();
 		$WxData = array(
 			'unique_id' => $WxUser->openid,
 			'name' => $WxUser->nickname,
