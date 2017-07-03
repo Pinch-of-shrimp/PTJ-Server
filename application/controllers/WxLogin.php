@@ -10,7 +10,7 @@ class WxLogin extends CI_Controller {
 		$this->load->library('wx_library', null, 'wx');
 	}
 
-	public function registerWxUser() {
+	public function index() {
 		$WxUser = $this->wx->getWxUser();
 		$WxData = array(
 			'unique_id' => $WxUser->openid,
@@ -37,18 +37,18 @@ class WxLogin extends CI_Controller {
 
 $fun = new WxLogin();
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-	$data = json_decode(file_get_contents("php://input"));
-	if (isset($data->operation)) {
-		$operation = $data->operation;
-		if (!empty($operation)) {
-			if ($operation == 'registerWxUser') {
+if ($_SERVER['REQUEST_METHOD'] == 'GET') {
+	// $data = json_decode(file_get_contents("php://input"));
+	// if (isset($data->operation)) {
+	// 	$operation = $data->operation;
+	// 	if (!empty($operation)) {
+	// 		if ($operation == 'registerWxUser') {
 				$fun->registerWxUser();
-			}
-		}
-	}
+	// 		}
+	// 	}
+	// }
 }
-else if ($_SERVER['REQUEST_METHOD'] == 'GET') {
-	echo "微信登录";
-	exit;
-}
+// else if ($_SERVER['REQUEST_METHOD'] == 'GET') {
+// 	echo "微信登录";
+// 	exit;
+// }
