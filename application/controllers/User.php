@@ -1,17 +1,12 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-// include_once("libraries/PHPMailer/class.smtp.php");       // 引入php邮件类  
-// include_once("libraries/PHPMailer/class.phpmailer.php");
-
 class User extends CI_Controller {
 
 	public function __construct() {
 		parent::__construct();
 		$this->load->model('User_model');
 		$this->load->library('Mailer');
-		// $this->load->library('PHPMailer/');
-
 	}
 
 	/**

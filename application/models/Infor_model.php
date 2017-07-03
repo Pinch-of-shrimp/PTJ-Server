@@ -20,10 +20,20 @@ class Infor_model extends CI_Model {
 
 		if ($query) {
 			foreach ($query->result() as $row) {
-				$hotJob["province"] = $row->lv_province;
-				$hotJob["city"] = $row->lv_city;
-				$hotJob["job"] = $row->lv_title;
-				array_push($result, $hotJob);
+				$allJob["job"] = $row->lv_title;
+				$allJob["province"] = $row->lv_province;
+				$allJob["city"] = $row->lv_city;
+				$allJob["startdate"] = $row->lv_startdate;
+				$allJob["enddate"] = $row->lv_enddate;
+				$allJob["worktime"] = $row->lv_time;
+				$allJob["salary"] = $row->lv_salary;
+				$allJob["salarytype"] = $row->lv_salarytype;
+				$allJob["worktype"] = $row->lv_worktype;
+				$allJob["peoplenumb"] = $row->lv_peoplenumb;
+				$allJob["description"] = $row->lv_description;
+				$allJob["require"] = $row->lv_require;
+				$allJob["workcontent"] = $row->lv_workcontent;
+				array_push($result, $allJob);
 			}
 			return $result;
 		}

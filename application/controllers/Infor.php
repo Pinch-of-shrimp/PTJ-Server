@@ -10,14 +10,14 @@ class Infor extends CI_Controller {
 
 	/**
 	 * 查询全部兼职
-	 * @return string
+	 * @return string(json)
 	 */
 	public function allJob() {
 		$result = $this->Infor_model->allJob();
 
 		if ($result) {
 			$resonse["result"] = "success";
-			$resonse["message"] = urlencode("查询热门职位成功");
+			$resonse["message"] = urlencode("查询全部职位成功");
 			$resonse["allJob"] = $result;
 			return urldecode(json_encode($response));
 		}
@@ -31,7 +31,7 @@ class Infor extends CI_Controller {
 	/**
 	 * 热门兼职
 	 * @param  string $city 所在城市
-	 * @return string       
+	 * @return string(json)       
 	 */
 	public function hotJob($city) {
 		if ($this->Infor_model->checkCity($city)) {
@@ -61,7 +61,7 @@ class Infor extends CI_Controller {
 	 * 附近兼职
 	 * @param  string $province 所在省份
 	 * @param  string $city     所在城市
-	 * @return string           
+	 * @return string(json)           
 	 */
 	public function nearJob($province, $city) {
 		if ($this->Infor_model->checkCity($city) && $this->Infor_model->checkCity($city)){
@@ -92,7 +92,7 @@ class Infor extends CI_Controller {
 	 * @param  string $province 所在省份
 	 * @param  string $city     所在城市
 	 * @param  string $worktype 兼职类型
-	 * @return string           
+	 * @return string(json)           
 	 */
 	public function weekendJob($province, $city) {
 		if ($this->Infor_model->checkProvince($province) && $this->Infor_model->checkCity($city)){
@@ -122,7 +122,7 @@ class Infor extends CI_Controller {
 	 * 周末兼职
 	 * @param  string $province 所在省份
 	 * @param  string $city     所在城市
-	 * @return string           
+	 * @return string(json)           
 	 */
 	public function recommendJob($province, $city, $worktype) {
 		if ($this->Infor_model->checkProvince($province) && $this->Infor_model->checkCity($city)) {
@@ -132,8 +132,7 @@ class Infor extends CI_Controller {
 				$response["result"] = "success";
 				$response["message"] = urlencode("推荐职位成功");
 				shuffle($result);
-				// 因为数据少，暂时只推荐一个
-				$response["recommendJob"] = array_slice($result, 0, 1);
+				$response["recommendJob"] = array_slice($result, 0, 3);
 				return urldecode(json_encode($response));
 			}
 			else {
@@ -157,7 +156,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	if (isset($data->operation)) {
 		$operation = $data->operation;
 		if (!empty($operation)) {
-			if ($operation == 'hotJob') {
+
+			if ($operation == 'allJob') {
+					echo $fun->allJob();
+					exit;
+				}
+
+			else if ($operation == 'hotJob') {
 				if(isset($data->city) && !empty($data->city)) {
 					$city = $data->city;
 					echo $fun->hotJob($city);
