@@ -147,6 +147,26 @@ class Infor extends CI_Controller {
 			return urldecode(json_encode($response));
 		}
 	}
+
+	/**
+	 * 输入为空
+	 * @return string(json) 
+	 */
+	public function getMsgParamNotEmpty() {
+		$response["result"] = "failure";
+		$response["message"] = urlencode("输入不能为空");
+		return urldecode(json_encode($response));
+	}
+
+	/**
+	 * 输入格式错误
+	 * @return string(json)
+	 */
+	public function getMsgInvalidParam() {
+		$response["result"] = "failure";
+		$response["message"] = urlencode("格式不正确");
+		return urldecode(json_encode($response));
+	}
 }
 
 $fun = new Infor();
@@ -168,6 +188,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 					echo $fun->hotJob($city);
 					exit;
 				}
+				else {
+					echo $fun->getMsgInvalidParam();
+					exit;
+				}
 			}
 
 			else if ($operation == 'nearJob') {
@@ -177,6 +201,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 					echo $fun->nearJob($province, $city);
 					exit;
 				}
+				else {
+					echo $fun->getMsgInvalidParam();
+					exit;
+				}
 			}
 
 			else if ($operation == 'weekendJob') {
@@ -184,6 +212,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 					$province = $data->province;
 					$city = $data->city;
 					echo $fun->weekendJob($province, $city);
+					exit;
+				}
+				else {
+					echo $fun->getMsgInvalidParam();
 					exit;
 				}
 			}
@@ -196,8 +228,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 					echo $fun->recommendJob($province, $city, $worktype);
 					exit;	
 				}
+				else {
+					echo $fun->getMsgInvalidParam();
+					exit;
+				}
 			}
 		}
+		else {		
+			echo $fun->getMsgParamNotEmpty();
+			exit;
+		}
+	} 
+	else {
+		echo $fun->getMsgInvalidParam();
+		exit;
 	}
 }
 else if ($_SERVER['REQUEST_METHOD'] == 'GET') {
