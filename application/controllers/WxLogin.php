@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class WxUser extends CI_Controller {
+class WxLogin extends CI_Controller {
 
 	public function __construct() {
 		parent::__construct();
@@ -35,7 +35,7 @@ class WxUser extends CI_Controller {
 	}
 }
 
-$fun = new WxUser();
+$fun = new WxLogin();
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	$data = json_decode(file_get_contents("php://input"));
