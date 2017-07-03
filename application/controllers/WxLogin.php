@@ -20,7 +20,7 @@ class WxLogin extends CI_Controller {
 			'city' => $WxUser->city,
 			'picture' => $WxUser->headimgurl
 			);
-		$result = $WxLogin_model->registerWxUser($WxData);
+		$result = $this->WxLogin_model->registerWxUser($WxData);
 		if ($result) {
 			// $response["result"] = "success";
 			// $response["message"] = urlencode("微信登录成功");

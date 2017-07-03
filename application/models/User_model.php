@@ -31,7 +31,10 @@ class User_model extends CI_Model {
 		$query = $this->db->insert('users', $data);
 
 		if ($query) {
-			return true;
+			$user["name"] = $name;
+			$user["unique_id"] = $unique_id;
+			$user["email"] = $email;
+			return $user;
 		}
 		else {
 			return false;
