@@ -7,7 +7,7 @@ class WxLogin extends CI_Controller {
 		parent::__construct();
 		// $this->load->model('User_model');
 		$this->load->model('WxLogin_model');
-		$this->load->library('Wx_library', null, 'wx');
+		$this->load->library('wx_library', null, 'wx');
 	}
 
 	public function registerWxUser() {
