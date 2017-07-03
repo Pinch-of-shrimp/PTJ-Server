@@ -10,7 +10,7 @@ class WxLogin extends CI_Controller {
 		$this->load->library('wx_library', null, 'wx');
 	}
 
-	public function index() {
+	public function registerWxUser() {
 		$WxUser = $this->wx->getWxUser();
 		$WxData = array(
 			'unique_id' => $WxUser->openid,
