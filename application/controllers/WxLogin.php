@@ -22,15 +22,17 @@ class WxLogin extends CI_Controller {
 			);
 		$result = $WxLogin_model->registerWxUser($WxData);
 		if ($result) {
-			$response["result"] = "success";
-			$response["message"] = urlencode("微信登录成功");
-			$response["wxUser"] = $result;
-			return urldecode(json_encode($response));
+			// $response["result"] = "success";
+			// $response["message"] = urlencode("微信登录成功");
+			// $response["wxUser"] = $result;
+			// echo urldecode(json_encode($response));
+			return true;
 		}
 		else {
-			$response["result"] = "failure";
-			$response["message"] = urlencode("微信登录失败，请检查你的网络");
-			return urldecode(json_encode($response));
+			// $response["result"] = "failure";
+			// $response["message"] = urlencode("微信登录失败，请检查你的网络");
+			// echo urldecode(json_encode($response));
+			return false;
 		}
 	}
 }
@@ -43,7 +45,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 	// 	$operation = $data->operation;
 	// 	if (!empty($operation)) {
 	// 		if ($operation == 'registerWxUser') {
-				$fun->registerWxUser();
+	$fun->registerWxUser();
+	exit;
 	// 		}
 	// 	}
 	// }
