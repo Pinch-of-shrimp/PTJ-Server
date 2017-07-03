@@ -16,14 +16,14 @@ class Infor extends CI_Controller {
 		$result = $this->Infor_model->allJob();
 
 		if ($result) {
-			$resonse["result"] = "success";
-			$resonse["message"] = urlencode("查询全部职位成功");
-			$resonse["allJob"] = $result;
+			$response["result"] = "success";
+			$response["message"] = urlencode("查询全部职位成功");
+			$response["allJob"] = $result;
 			return urldecode(json_encode($response));
 		}
 		else {
-			$resonse["result"] = "failure";
-			$resonse["message"] = urlencode("请检查你的网络连接");
+			$response["result"] = "failure";
+			$response["message"] = urlencode("请检查你的网络连接");
 			return urldecode(json_encode($response));
 		}
 	}

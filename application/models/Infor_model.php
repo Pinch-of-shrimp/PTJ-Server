@@ -56,8 +56,19 @@ class Infor_model extends CI_Model {
 
 		if ($query) {
 			foreach ($query->result() as $row) {
-				$hotJob["city"] = $row->lv_city;
 				$hotJob["job"] = $row->lv_title;
+				$hotJob["province"] = $row->lv_province;
+				$hotJob["city"] = $row->lv_city;
+				$hotJob["startdate"] = $row->lv_startdate;
+				$hotJob["enddate"] = $row->lv_enddate;
+				$hotJob["worktime"] = $row->lv_time;
+				$hotJob["salary"] = $row->lv_salary;
+				$hotJob["salarytype"] = $row->lv_salarytype;
+				$hotJob["worktype"] = $row->lv_worktype;
+				$hotJob["peoplenumb"] = $row->lv_peoplenumb;
+				$hotJob["description"] = $row->lv_description;
+				$hotJob["require"] = $row->lv_require;
+				$hotJob["workcontent"] = $row->lv_workcontent;
 				array_push($result, $hotJob);
 			}
 			return $result;
@@ -82,9 +93,19 @@ class Infor_model extends CI_Model {
 
 		if ($query) {
 			foreach ($query->result() as $row) {
+				$nearJob["job"] = $row->lv_title;
 				$nearJob["province"] = $row->lv_province;
 				$nearJob["city"] = $row->lv_city;
-				$nearJob["job"] = $row->lv_title;
+				$nearJob["startdate"] = $row->lv_startdate;
+				$nearJob["enddate"] = $row->lv_enddate;
+				$nearJob["worktime"] = $row->lv_time;
+				$nearJob["salary"] = $row->lv_salary;
+				$nearJob["salarytype"] = $row->lv_salarytype;
+				$nearJob["worktype"] = $row->lv_worktype;
+				$nearJob["peoplenumb"] = $row->lv_peoplenumb;
+				$nearJob["description"] = $row->lv_description;
+				$nearJob["require"] = $row->lv_require;
+				$nearJob["workcontent"] = $row->lv_workcontent;
 				array_push($result, $nearJob);
 			}
 			return $result;
@@ -110,10 +131,19 @@ class Infor_model extends CI_Model {
 
 		if ($query) {
 			foreach ($query->result() as $row) {
+				$recommendJob["job"] = $row->lv_title;
 				$recommendJob["province"] = $row->lv_province;
 				$recommendJob["city"] = $row->lv_city;
+				$recommendJob["startdate"] = $row->lv_startdate;
+				$recommendJob["enddate"] = $row->lv_enddate;
+				$recommendJob["worktime"] = $row->lv_time;
+				$recommendJob["salary"] = $row->lv_salary;
+				$recommendJob["salarytype"] = $row->lv_salarytype;
 				$recommendJob["worktype"] = $row->lv_worktype;
-				$recommendJob["job"] = $row->lv_title;
+				$recommendJob["peoplenumb"] = $row->lv_peoplenumb;
+				$recommendJob["description"] = $row->lv_description;
+				$recommendJob["require"] = $row->lv_require;
+				$recommendJob["workcontent"] = $row->lv_workcontent;
 				array_push($result, $recommendJob);
 			}
 			return $result;
@@ -141,11 +171,19 @@ class Infor_model extends CI_Model {
 			foreach ($query->result() as $row) {
 				// 如果是周末兼职
 				if ($this->isWeekend($row->lv_startdate)) {
-					$weekendJob["province"] = $row->lv_province;
-					$weekendJob["city"] = $row->lv_city;
-					$weekendJob["startdate"] = $row->lv_startdate;
-					$weekendJob["enddate"] = $row->lv_enddate;
-					$weekendJob["job"] = $row->lv_title;
+				$weekendJob["job"] = $row->lv_title;
+				$weekendJob["province"] = $row->lv_province;
+				$weekendJob["city"] = $row->lv_city;
+				$weekendJob["startdate"] = $row->lv_startdate;
+				$weekendJob["enddate"] = $row->lv_enddate;
+				$weekendJob["worktime"] = $row->lv_time;
+				$weekendJob["salary"] = $row->lv_salary;
+				$weekendJob["salarytype"] = $row->lv_salarytype;
+				$weekendJob["worktype"] = $row->lv_worktype;
+				$weekendJob["peoplenumb"] = $row->lv_peoplenumb;
+				$weekendJob["description"] = $row->lv_description;
+				$weekendJob["require"] = $row->lv_require;
+				$weekendJob["workcontent"] = $row->lv_workcontent;
 					array_push($result, $weekendJob);
 				}
 				return $result;

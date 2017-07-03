@@ -227,6 +227,21 @@ class User extends CI_Controller {
 		}
 	}
 
+	public function feedback($author, $content) {
+		$result = $this->User_model->feedback($author, $content);
+
+		if (!$result) {
+			$response["result"] = "failure";
+			$response["message"] = urlencode("反馈失败");
+			return urldecode(json_encode($response));
+		}
+		else {
+			$response["result"] = "success";
+			$response["message"] = urlencode("反馈成功");
+			return urldecode(json_encode($response));
+		}
+	}
+
 	/**
 	 * 验证邮箱是否合法
 	 * @param  string  $email 
@@ -366,6 +381,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 					echo $fun->resetPassword($email, $password, $code);
 					exit;
 				} 
+				else {
+					echo $fun->getMsgInvalidParam();
+					exit;
+				}
+			}
+
+			else if ($operation == 'feedback') {
+				if (isset($data->author) && !empty($data->author) && isset($data->content) && !empty($data->content)) {
+					$author = $data->author;
+					$content = $data->content;
+					echo $fun->feedback($author, $content);
+					exit;
+				}
 				else {
 					echo $fun->getMsgInvalidParam();
 					exit;

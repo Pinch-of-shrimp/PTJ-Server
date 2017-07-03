@@ -284,6 +284,19 @@ class User_model extends CI_Model {
 		}
 	}
 
+	public function feedback($author, $content) {
+		$data = array('author' => $author, 
+					  'content' => $content);
+		$query = $this->db->insert('feedback', $data);
+
+		if ($query) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
 	/**
 	 * 查找邮箱来检查用户是否注册过
 	 * @param  string $email 
