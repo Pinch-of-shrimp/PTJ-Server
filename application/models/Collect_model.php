@@ -18,7 +18,8 @@ class Collect_model extends CI_Model {
 	public function searchCollection($user_id) {
 		$result = array();
 		$job_ids = $this->getUserCollections($user_id);
-		for($i = 0; $i < count($job_ids); $i++) {
+		print_r($job_ids);
+		for ($i = 1; $i < count($job_ids); $i++) {
 			// jobInfor是一个二维数组，包含职位所有信息
 			$jobInfor = $this-> getJobInfor($job_ids[$i]);
 			array_push($result, $jobInfor);
