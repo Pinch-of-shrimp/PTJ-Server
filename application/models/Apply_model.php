@@ -24,7 +24,7 @@ class Apply_model extends CI_Model {
 						 'er_workcontent' => $workcontent);
 		$this->db->select('*');
 		$this->db->from('employment_request');
-		$this->db->where('er_jobtitle' => $jobtitle,);
+		$this->db->where('er_jobtitle', $jobtitle);
 		$query = $this->db->get();
 
 		if ($query) {
