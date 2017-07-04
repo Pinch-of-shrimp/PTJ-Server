@@ -16,14 +16,14 @@ class Collect_model extends CI_Model {
 	 * @return     array   返回一个三维数组，其中每个元素都是包含职位全部信息的二维数组
 	 */
 	public function searchCollection($user_id) {
-		// $result = array();
+		$result = array();
 		$job_ids = $this->getUserCollections($user_id);
 		for ($i = 0; $i < count($job_ids); $i++) {
 			// jobInfor是一个二维数组，包含职位所有信息
 			$jobInfor = $this-> getJobInfor($job_ids[$i]);
-			// array_push($result, $jobInfor);
+			array_push($result, $jobInfor);
 		}
-		return $jobInfor;
+		return $result;
 	}
 
 	public function updateCollection($user_id, $job_id) {
@@ -124,7 +124,7 @@ class Collect_model extends CI_Model {
 	 * @return     array|boolean  The job infor.
 	 */
 	public function getJobInfor($job_id) {
-		$result = array();
+		// $result = array();
 		$this->db->select('*');
 		$this->db->from('jobinformation');
 		$this->db->where('lv_id', $job_id);
@@ -145,9 +145,9 @@ class Collect_model extends CI_Model {
 				$jobInfor["description"] = $row->lv_description;
 				$jobInfor["require"] = $row->lv_require;
 				$jobInfor["workcontent"] = $row->lv_workcontent;
-				array_push($result, $jobInfor);
+				// array_push($result, $jobInfor);
 			}
-			return $result;
+			return $jobInfor;
 		}
 		else {
 			return false;
