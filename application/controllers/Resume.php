@@ -124,8 +124,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 			}
 
 			else if ($operation == 'updateResume') {
-				if(isset($data->user_id) && !empty($data->user_id) && isset($data->sex) && !empty($data->sex) && isset($data->birthday) && !empty($data->birthday) && isset($data->isStudent) && !empty($data->isStudent) && isset($data->realname) && !empty($data->realname)) {
+				if(isset($data->user_id) && !empty($data->user_id) && isset($data->name) && !empty($data->name) && isset($data->sex) && !empty($data->sex) && isset($data->birthday) && !empty($data->birthday) && isset($data->isStudent) && !empty($data->isStudent) && isset($data->realname) && !empty($data->realname)) {
 					$user_id = $data->user_id;
+					$name = $data->name;
 					$sex = $data->sex;
 					$birthday = $data->birthday;
 					$isStudent = $data->isStudent;
