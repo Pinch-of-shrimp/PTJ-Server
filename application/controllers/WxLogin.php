@@ -17,8 +17,7 @@ class WxLogin extends CI_Controller {
 			'name' => $WxUser->nickname,
 			'sex' => $WxUser->sex,
 			'province' => $WxUser->province,
-			'city' => $WxUser->city,
-			'picture' => $WxUser->headimgurl
+			'city' => $WxUser->city
 			);
 		$result = $this->WxLogin_model->registerWxUser($WxData);
 		if ($result) {
