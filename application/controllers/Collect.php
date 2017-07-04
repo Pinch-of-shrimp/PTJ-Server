@@ -9,7 +9,7 @@ class Collect extends CI_Controller {
 	}
 
 	public function searchCollection($user_id) {
-		$result = $this->Collect_model->searchCollection($province, $city);
+		$result = $this->Collect_model->searchCollection($user_id);
 
 		if ($result) {
 			$response["result"] = "success";
