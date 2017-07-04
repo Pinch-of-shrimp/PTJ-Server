@@ -20,12 +20,20 @@ class Collect_model extends CI_Model {
 		$job_ids = $this->getUserCollections($user_id);
 		for ($i = 0; $i < count($job_ids); $i++) {
 			// jobInfor是一个二维数组，包含职位所有信息
-			$jobInfor = $this-> getJobInfor($job_ids[$i]);
+			$jobInfor = $this->getJobInfor($job_ids[$i]);
 			array_push($result, $jobInfor);
 		}
 		return $result;
 	}
 
+	/**
+	 * 更新我的收藏
+	 *
+	 * @param      <string>   $user_id  The user identifier
+	 * @param      <int>   $job_id   职位编号
+	 *
+	 * @return     <boolean>  
+	 */
 	public function updateCollection($user_id, $job_id) {
 		$this->db->select('*');
 		$this->db->from('collection');
@@ -65,7 +73,6 @@ class Collect_model extends CI_Model {
 					return false;
 				}
 			}
-
 		}
 		else {
 			return false;
@@ -78,7 +85,7 @@ class Collect_model extends CI_Model {
 	 * @param      <string>   $user_id  The user identifier
 	 * @param      <int>   $job_id   The job identifier
 	 *
-	 * @return     boolean  
+	 * @return     <boolean>  
 	 */
 	public function deleteCollection($user_id, $job_id) {
 		$query = $this->db->delete('collection', array('unique_id' => $user_id,
@@ -92,7 +99,7 @@ class Collect_model extends CI_Model {
 	}
 
 	/**
-	 * 根据user的唯一id获取其收藏的职位job_id
+	 * 根据user的唯一id获取其收藏的职位job_id集合
 	 *
 	 * @param      <string>   $user_id  The user identifier
 	 *
@@ -106,7 +113,6 @@ class Collect_model extends CI_Model {
 		$query = $this->db->get();
 		if ($query) {
 			foreach ($query->result() as $row) {
-				// $job_id = $row->job_id;
 				array_push($job_ids, $row->job_id);
 			}
 			return $job_ids;
@@ -124,7 +130,6 @@ class Collect_model extends CI_Model {
 	 * @return     array|boolean  The job infor.
 	 */
 	public function getJobInfor($job_id) {
-		// $result = array();
 		$this->db->select('*');
 		$this->db->from('jobinformation');
 		$this->db->where('lv_id', $job_id);
@@ -145,7 +150,6 @@ class Collect_model extends CI_Model {
 				$jobInfor["description"] = $row->lv_description;
 				$jobInfor["require"] = $row->lv_require;
 				$jobInfor["workcontent"] = $row->lv_workcontent;
-				// array_push($result, $jobInfor);
 			}
 			return $jobInfor;
 		}

@@ -8,6 +8,13 @@ class Collect extends CI_Controller {
 		$this->load->model('Collect_model');
 	}
 
+	/**
+	 * 查询我的收藏
+	 *
+	 * @param      <string>  $user_id  The user identifier
+	 *
+	 * @return     json   ( 注: HTTP通信中并不存在所谓的json，而是将string转成json罢了 )
+	 */
 	public function searchCollection($user_id) {
 		$result = $this->Collect_model->searchCollection($user_id);
 
@@ -24,6 +31,14 @@ class Collect extends CI_Controller {
 		}
 	}
 
+	/**
+	 * 更新我的收藏
+	 *
+	 * @param      <string>   $user_id  The user identifier
+	 * @param      <int>   $job_id   职位编号
+	 *
+	 * @return     <json>  
+	 */
 	public function updateCollection($user_id, $job_id) {
 		$result = $this->Collect_model->updateCollection($user_id, $job_id);
 
@@ -40,6 +55,14 @@ class Collect extends CI_Controller {
 		}
 	}
 
+	/**
+	 * 删除我的收藏
+	 *
+	 * @param      <string>   $user_id  The user identifier
+	 * @param      <int>   $job_id   The job identifier
+	 *
+	 * @return     <json> 
+	 */
 	public function deleteCollection($user_id, $job_id) {
 		$result = $this->Collect_model->deleteCollection($user_id, $job_id);
 

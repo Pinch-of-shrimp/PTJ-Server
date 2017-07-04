@@ -28,21 +28,6 @@ class Infor extends CI_Controller {
 			return urldecode(json_encode($response));
 		}
 	}
-
-	// public function getJobInfor($jobname) {
-	// 	$result = $this->Infor_model->getJobInfor($jobname);
-	// 		if ($result) {
-	// 			$response["result"] = "success";
-	// 			$response["message"] = urlencode("获取职位信息成功");
-	// 			$response["searchJob"] = $result;
-	// 			return urldecode(json_encode($response));
-	// 		}
-	// 		else {
-	// 			$response["result"] = "failure";
-	// 			$response["message"] = urlencode("获取职位信息失败");
-	// 			return urldecode(json_encode($response));
-	// 		}
-	// }
 	
 	/**
 	 * 热门兼职

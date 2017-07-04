@@ -8,13 +8,20 @@ class Resume extends CI_Controller {
 		$this->load->model('Resume_model');
 	}
 
+	/**
+	 * 获取简历
+	 *
+	 * @param      <string>  $user_id  The user identifier
+	 *
+	 * @return     <json>  ( 注: HTTP通信中并不存在所谓的json，而是将string转成json罢了 )
+	 */
 	public function getResume($user_id) {
 		$result = $this->Resume_model->getResume($user_id);
 
 		if ($result) {
 			$response["result"] = "success";
 			$response["message"] = urlencode("查询我的简历成功");
-			$response["searchCollection"] = $result;
+			$response["getResume"] = $result;
 			return urldecode(json_encode($response));
 		}
 		else {
@@ -24,13 +31,30 @@ class Resume extends CI_Controller {
 		}
 	}
 
+	/**
+	 * 简历信息
+	 *
+	 * @param      <string>   $user_id       The user identifier
+	 * @param      <string>   $name          用户名
+	 * @param      <boolean>  $sex           性别 *必填
+	 * @param      <string>   $birthday      出生年月*必填
+	 * @param      <boolean>  $isStudent     是否是学生*必填
+	 * @param      <string>   $realname      真实姓名*必填
+	 * @param      <string>   $school        学校
+	 * @param      <string>   $major         主修专业
+	 * @param      <string>   $eduStartDate  入学时间
+	 * @param      <string>   $tag           个人标签
+	 * @param      <string>   $statement     个人宣言
+	 *
+	 * @return     <json>  
+	 */
 	public function updateResume($user_id, $name, $sex, $birthday, $isStudent, $realname, $school, $major, $eduStartDate, $tag, $statement) {
 		$result = $this->Resume_model->updateResume($name, $sex, $birthday, $isStudent, $realname, $school, $major, $eduStartDate, $tag, $statement);
 
 		if ($result) {
 			$response["result"] = "success";
 			$response["message"] = urlencode("更新我的简历成功");
-			$response["updateCollection"] = $result;
+			$response["updateResume"] = $result;
 			return urldecode(json_encode($response));
 		}
 		else {
