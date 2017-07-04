@@ -49,7 +49,7 @@ class Resume extends CI_Controller {
 	 * @return     <json>  
 	 */
 	public function updateResume($user_id, $name, $sex, $birthday, $isStudent, $realname, $school, $major, $eduStartDate, $tag, $statement) {
-		$result = $this->Resume_model->updateResume($name, $sex, $birthday, $isStudent, $realname, $school, $major, $eduStartDate, $tag, $statement);
+		$result = $this->Resume_model->updateResume($user_id, $name, $sex, $birthday, $isStudent, $realname, $school, $major, $eduStartDate, $tag, $statement);
 
 		if ($result) {
 			$response["result"] = "success";
