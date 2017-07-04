@@ -79,14 +79,14 @@ class Apply_model extends CI_Model {
 			if ($row_count == 0) {
 				$insert_data = array('unique_id' => $user_id,
 									 'job_id' => $job_id,
-									 'applystate' => 0);
+									 'applystate' => 2);
 
 				$insert_query = $this->db->insert('employ_request', $insert_data);
 
 				if ($insert_query) {
 					$employApply["unique_id"] = $user_id;
 					$employApply["job_id"] = $job_id;
-					$employApply["applystate"] = 0;
+					$employApply["applystate"] = 2;
 					return $employApply;
 				}
 				else {
@@ -97,12 +97,12 @@ class Apply_model extends CI_Model {
 			else {
 				$update_data = array('unique_id' => $user_id,
 							   		 'job_id' => $job_id,
-							   		 'applystate' => 0);
+							   		 'applystate' => 2);
 				$update_query = $this->db->update('employ_request', $update_data);
 				if ($update_query) {
 					$employApply["unique_id"] = $user_id;
 					$employApply["job_id"] = $job_id;
-					$employApply["applystate"] = 0;
+					$employApply["applystate"] = 2;
 					return $employApply;
 				}
 				else {
@@ -138,7 +138,7 @@ class Apply_model extends CI_Model {
 	 * 根据user的唯一id获取其申请的职位job_id集合
 	 *
 	 * @param      <string>         $user_id     The user identifier
-	 * @param      <string>         $applyState 职位申请状态，0，1，-1分别代表申请中，申请成功，申请失败
+	 * @param      <string>         $applyState 职位申请状态，0，2，-1分别代表申请中，申请成功，申请失败
 	 *
 	 * @return     array|boolean  The apply jobs.
 	 */

@@ -71,7 +71,7 @@ class Apply extends CI_Controller {
 	 * 查询申请的职位状态
 	 *
 	 * @param      <string>         $user_id     The user identifier
-	 * @param      <string>         $applyState 职位申请状态，0，1，-1分别代表申请中，申请成功，申请失败
+	 * @param      <string>         $applyState 职位申请状态，0，2，-1分别代表申请中，申请成功，申请失败
 	 *
 	 * @return     <json>  			The apply jobs state.
 	 */
