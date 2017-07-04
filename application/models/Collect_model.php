@@ -100,13 +100,15 @@ class Collect_model extends CI_Model {
 	 * @return     boolean  The user collection.
 	 */
 	public function getUserCollections($user_id) {
+		// $result = array();
 		$this->db->select('*');
 		$this->db->from('collection');
 		$this->db->where('unique_id', $user_id);
 		$query = $this->db->get();
 		if ($query) {
 			foreach ($query->result() as $row) {
-				$job_ids["job_id"] = $row->job_id;
+				$job_id = $row->job_id;
+				array_push($job_ids, $job_id);
 			}
 			return $job_ids;
 		}
