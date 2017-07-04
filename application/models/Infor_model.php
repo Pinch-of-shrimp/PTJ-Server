@@ -7,10 +7,11 @@ class Infor_model extends CI_Model {
 		parent::__construct();
 		$this->load->database();
 	}
-
+	
 	/**
-	 * 查询全部兼职
-	 * @return string
+	 * 全部兼职
+	 *
+	 * @return     array|boolean  
 	 */
 	public function allJob() {
 		$result = array();
@@ -41,11 +42,13 @@ class Infor_model extends CI_Model {
 			return false;
 		}	
 	}
-
+	
 	/**
 	 * 热门兼职
-	 * @param  string $city 所在城市
-	 * @return string       
+	 *
+	 * @param      <string>         $city   所在城市
+	 *
+	 * @return     array|boolean  
 	 */
 	public function hotJob($city) {
 		$result = array();
@@ -77,12 +80,14 @@ class Infor_model extends CI_Model {
 			return false;
 		}
 	}
-
+	
 	/**
 	 * 附近兼职
-	 * @param  string $province 所在省份
-	 * @param  string $city     所在城市
-	 * @return string           
+	 *
+	 * @param      <string>         $province  所在省份
+	 * @param      <string>         $city      所在城市
+	 *
+	 * @return     array|boolean  
 	 */
 	public function nearJob($province, $city) {
 		$result = array();
@@ -114,13 +119,15 @@ class Infor_model extends CI_Model {
 			return false;
 		}
 	}
-
+	
 	/**
 	 * 兼职推荐
-	 * @param  string $province 所在省份
-	 * @param  string $city     所在城市
-	 * @param  string $worktype 兼职类型
-	 * @return string           
+	 *
+	 * @param      <string>         $province  所在省份
+	 * @param      <string>         $city      所在城市
+	 * @param      <string>         $worktype  兼职类型
+	 *
+	 * @return     array|boolean  
 	 */
 	public function recommendJob($province, $city, $worktype) {
 		$result = array();
@@ -153,12 +160,14 @@ class Infor_model extends CI_Model {
 		}
 
 	}
-
+	
 	/**
 	 * 周末兼职
-	 * @param  string $province 所在省份
-	 * @param  string $city     所在城市
-	 * @return string           
+	 *
+	 * @param      <string>         $province  所在省份
+	 * @param      <string>         $city      所在城市
+	 *
+	 * @return     array|boolean
 	 */
 	public function weekendJob($province, $city) {
 		$result = array();
@@ -195,9 +204,48 @@ class Infor_model extends CI_Model {
 	}
 
 	/**
+	 * 模糊查询职位
+	 *
+	 * @param      <string>         $jobname  The jobname
+	 *
+	 * @return     array|boolean  
+	 */
+	public function searchJob($jobname) {
+		$result = array();
+		$this->db->select('*');
+		$this->db->like('lv_title', $jobname);
+		$this->db->from('jobinformation');
+		$query = $this->db->get();
+		if ($query) {
+			foreach ($query->result() as $row) {
+				$searchJob["job"] = $row->lv_title;
+				$searchJob["province"] = $row->lv_province;
+				$searchJob["city"] = $row->lv_city;
+				$searchJob["startdate"] = $row->lv_startdate;
+				$searchJob["enddate"] = $row->lv_enddate;
+				$searchJob["worktime"] = $row->lv_time;
+				$searchJob["salary"] = $row->lv_salary;
+				$searchJob["salarytype"] = $row->lv_salarytype;
+				$searchJob["worktype"] = $row->lv_worktype;
+				$searchJob["peoplenumb"] = $row->lv_peoplenumb;
+				$searchJob["description"] = $row->lv_description;
+				$searchJob["require"] = $row->lv_require;
+				$searchJob["workcontent"] = $row->lv_workcontent;
+				array_push($result, $searchJob);
+			}
+			return $result;
+		}
+		else {
+			return false;
+		}	
+	}
+	
+	/**
 	 * 根据日期判断一天是不是周末
-	 * @param  string  $day 日期
-	 * @return boolean      
+	 *
+	 * @param      <string>   $day    日期
+	 *
+	 * @return     boolean  True if weekend, False otherwise.
 	 */
 	public function isWeekend($day) {
 		$week = date("w", strtotime($day));
@@ -208,11 +256,13 @@ class Infor_model extends CI_Model {
 			return false;
 		}
 	}
-
+	
 	/**
 	 * 检查该省是否有兼职信息
-	 * @param  string $province 
-	 * @return boolean           
+	 *
+	 * @param      <string>   $province  
+	 *
+	 * @return     boolean  
 	 */
 	public function checkProvince($province) {
 		$this->db->select('*');
@@ -228,10 +278,12 @@ class Infor_model extends CI_Model {
 	}
 
 	/**
-     * 检查该城市是否有兼职信息
-     * @param  string $city 
-     * @return boolean       
-     */
+	 * 检查该城市是否有兼职信息
+	 *
+	 * @param      <string>   $city   
+	 *
+	 * @return     boolean  
+	 */
 	public function checkCity($city) {
 		$this->db->select('*');
 		$this->db->from('jobinformation');

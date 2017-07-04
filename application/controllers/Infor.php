@@ -7,10 +7,11 @@ class Infor extends CI_Controller {
 		parent::__construct();
 		$this->load->model('Infor_model');
 	}
-
+	
 	/**
-	 * 查询全部兼职
-	 * @return string(json)
+	 * 全部兼职
+	 *
+	 * @return     <json>  ( 注: HTTP通信中并不存在所谓的json，而是将string转成json罢了 )
 	 */
 	public function allJob() {
 		$result = $this->Infor_model->allJob();
@@ -27,11 +28,13 @@ class Infor extends CI_Controller {
 			return urldecode(json_encode($response));
 		}
 	}
-
+	
 	/**
 	 * 热门兼职
-	 * @param  string $city 所在城市
-	 * @return string(json)       
+	 *
+	 * @param      <string>  $city  
+	 *
+	 * @return     <json>  
 	 */
 	public function hotJob($city) {
 		if ($this->Infor_model->checkCity($city)) {
@@ -56,12 +59,14 @@ class Infor extends CI_Controller {
 			return urldecode(json_encode($response));
 		}
 	}
-
+	
 	/**
 	 * 附近兼职
-	 * @param  string $province 所在省份
-	 * @param  string $city     所在城市
-	 * @return string(json)           
+	 *
+	 * @param      <string>  $province  所在省份
+	 * @param      <string>  $city      所在城市
+	 *
+	 * @return     <json>  
 	 */
 	public function nearJob($province, $city) {
 		if ($this->Infor_model->checkCity($city) && $this->Infor_model->checkCity($city)){
@@ -86,13 +91,14 @@ class Infor extends CI_Controller {
 			return urldecode(json_encode($response));
 		}
 	}
-
+	
 	/**
-	 * 兼职推荐
-	 * @param  string $province 所在省份
-	 * @param  string $city     所在城市
-	 * @param  string $worktype 兼职类型
-	 * @return string(json)           
+	 * 周末兼职
+	 *
+	 * @param      <string>  $province  所在省份
+	 * @param      <string>  $city      所在城市
+	 *
+	 * @return     <json> 
 	 */
 	public function weekendJob($province, $city) {
 		if ($this->Infor_model->checkProvince($province) && $this->Infor_model->checkCity($city)){
@@ -117,12 +123,15 @@ class Infor extends CI_Controller {
 			return urldecode(json_encode($response));
 		}
 	}
-
+	
 	/**
 	 * 周末兼职
-	 * @param  string $province 所在省份
-	 * @param  string $city     所在城市
-	 * @return string(json)           
+	 *
+	 * @param      <string>  $province  所在省份
+	 * @param      <string>  $city      所在城市
+	 * @param      <string>  $worktype  工作类型
+	 *
+	 * @return     <json>  
 	 */
 	public function recommendJob($province, $city, $worktype) {
 		if ($this->Infor_model->checkProvince($province) && $this->Infor_model->checkCity($city)) {
@@ -149,8 +158,32 @@ class Infor extends CI_Controller {
 	}
 
 	/**
-	 * 输入为空
-	 * @return string(json) 
+	 * 查询职位
+	 *
+	 * @param      <string>  $jobname  The jobname
+	 *
+	 * @return     <json>  
+	 */
+	public function searchJob($jobname) {
+			$result = $this->Infor_model->searchJob($jobname);
+
+			if ($result) {
+				$response["result"] = "success";
+				$response["message"] = urlencode("查询职位成功");
+				$response["searchJob"] = $result;
+				return urldecode(json_encode($response));
+			}
+			else {
+				$response["result"] = "failure";
+				$response["message"] = urlencode("查询职位失败");
+				return urldecode(json_encode($response));
+			}
+	}
+
+	/**
+	 * Gets the message parameter not empty.
+	 *
+	 * @return     <json>  The message parameter not empty.
 	 */
 	public function getMsgParamNotEmpty() {
 		$response["result"] = "failure";
@@ -159,8 +192,9 @@ class Infor extends CI_Controller {
 	}
 
 	/**
-	 * 输入格式错误
-	 * @return string(json)
+	 * Gets the message invalid parameter.
+	 *
+	 * @return     <json>  The message invalid parameter.
 	 */
 	public function getMsgInvalidParam() {
 		$response["result"] = "failure";
@@ -226,6 +260,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 					$city = $data->city;
 					$worktype = $data->worktype;
 					echo $fun->recommendJob($province, $city, $worktype);
+					exit;	
+				}
+				else {
+					echo $fun->getMsgInvalidParam();
+					exit;
+				}
+			}
+
+			else if ($operation == 'searchJob') {
+				if(isset($data->jobname) && !empty($data->jobname)) {
+					$jobname = $data->jobname;
+					echo $fun->searchJob($jobname);
 					exit;	
 				}
 				else {
