@@ -98,6 +98,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 					echo $fun->getMsgInvalidParam();
 					exit;
 				}
+			}
 
 			else if ($operation == 'updateCollection') {
 				if(isset($data->user_id) && !empty($data->user_id) && isset($data->job_id) && !empty($data->job_id)) {
