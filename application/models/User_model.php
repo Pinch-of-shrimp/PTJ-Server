@@ -65,7 +65,7 @@ class User_model extends CI_Model {
 				$insert_data = array('email' => $email,
 									 'encrypted_temp_password' => $encrypted_temp_password, 
 									 'salt' => $salt,
-									 'cratetime' => date("Y-m-d H:i:s"));
+									 'createtime' => date("Y-m-d H:i:s"));
 
 				$insert_query = $this->db->insert('register_request', $insert_data);
 
@@ -83,7 +83,7 @@ class User_model extends CI_Model {
 				$update_data = array('email' => $email, 
 					  				 'encrypted_temp_password' => $encrypted_temp_password,
 					  				 'salt' => $salt,
-					  				 'cratetime' => date("Y-m-d H:i:s"));
+					  				 'createtime' => date("Y-m-d H:i:s"));
 				$update_query = $this->db->update('register_request', $update_data);
 				if ($update_query) {
 					$user["email"] = $email;
@@ -120,7 +120,7 @@ class User_model extends CI_Model {
 			$db_encrypted_temp_password = $row->encrypted_temp_password;
 
 			if ($this->verifyHash($code.$salt, $db_encrypted_temp_password)) {
-				$old = new DateTime($row->cratetime);
+				$old = new DateTime($row->createtime);
 				$now = new DateTime(date("Y-m-d H:i:s"));
 				$diff = $now->getTimestamp() - $old->getTimestamp();
 
@@ -215,7 +215,7 @@ class User_model extends CI_Model {
 				$insert_data = array('email' => $email,
 									 'encrypted_temp_password' => $encrypted_temp_password, 
 									 'salt' => $salt,
-									 'cratetime' => date("Y-m-d H:i:s"));
+									 'createtime' => date("Y-m-d H:i:s"));
 
 				$insert_query = $this->db->insert('password_reset_request', $insert_data);
 
@@ -233,7 +233,7 @@ class User_model extends CI_Model {
 				$update_data = array('email' => $email, 
 					  				 'encrypted_temp_password' => $encrypted_temp_password,
 					  				 'salt' => $salt,
-					  				 'cratetime' => date("Y-m-d H:i:s"));
+					  				 'createtime' => date("Y-m-d H:i:s"));
 				$update_query = $this->db->update('password_reset_request', $update_data);
 				if ($update_query) {
 					$user["email"] = $email;
@@ -269,7 +269,7 @@ class User_model extends CI_Model {
 			$db_encrypted_temp_password = $row->encrypted_temp_password;
 
 			if ($this->verifyHash($code.$salt, $db_encrypted_temp_password)) {
-				$old = new DateTime($row->cratetime);
+				$old = new DateTime($row->createtime);
 				$now = new DateTime(date("Y-m-d H:i:s"));
 				$diff = $now->getTimestamp() - $old->getTimestamp();
 
