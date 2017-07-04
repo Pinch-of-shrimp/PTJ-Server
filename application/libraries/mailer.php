@@ -2,7 +2,6 @@
 defined('BASEPATH') OR exit('No direct script access allowed');  
 
 class Mailer { 
-  
     /**
      * 发送邮件
      * @param  string $email         
