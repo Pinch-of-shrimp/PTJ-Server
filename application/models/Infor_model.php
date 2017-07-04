@@ -21,6 +21,7 @@ class Infor_model extends CI_Model {
 
 		if ($query) {
 			foreach ($query->result() as $row) {
+				$allJob["job_id"] = $row->lv_id;
 				$allJob["job"] = $row->lv_title;
 				$allJob["province"] = $row->lv_province;
 				$allJob["city"] = $row->lv_city;
@@ -59,6 +60,7 @@ class Infor_model extends CI_Model {
 
 		if ($query) {
 			foreach ($query->result() as $row) {
+				$hotJob["job_id"] = $row->lv_id;
 				$hotJob["job"] = $row->lv_title;
 				$hotJob["province"] = $row->lv_province;
 				$hotJob["city"] = $row->lv_city;
@@ -98,6 +100,7 @@ class Infor_model extends CI_Model {
 
 		if ($query) {
 			foreach ($query->result() as $row) {
+				$nearJob["job_id"] = $row->lv_id;
 				$nearJob["job"] = $row->lv_title;
 				$nearJob["province"] = $row->lv_province;
 				$nearJob["city"] = $row->lv_city;
@@ -138,6 +141,7 @@ class Infor_model extends CI_Model {
 
 		if ($query) {
 			foreach ($query->result() as $row) {
+				$recommendJob["job_id"] = $row->lv_id;
 				$recommendJob["job"] = $row->lv_title;
 				$recommendJob["province"] = $row->lv_province;
 				$recommendJob["city"] = $row->lv_city;
@@ -180,6 +184,7 @@ class Infor_model extends CI_Model {
 			foreach ($query->result() as $row) {
 				// 如果是周末兼职
 				if ($this->isWeekend($row->lv_startdate)) {
+					$weekendJob["job_id"] = $row->lv_id;
 					$weekendJob["job"] = $row->lv_title;
 					$weekendJob["province"] = $row->lv_province;
 					$weekendJob["city"] = $row->lv_city;
@@ -218,6 +223,7 @@ class Infor_model extends CI_Model {
 		$query = $this->db->get();
 		if ($query) {
 			foreach ($query->result() as $row) {
+				$searchJob["job_id"] = $row->lv_id;
 				$searchJob["job"] = $row->lv_title;
 				$searchJob["province"] = $row->lv_province;
 				$searchJob["city"] = $row->lv_city;

@@ -28,6 +28,21 @@ class Infor extends CI_Controller {
 			return urldecode(json_encode($response));
 		}
 	}
+
+	// public function getJobInfor($jobname) {
+	// 	$result = $this->Infor_model->getJobInfor($jobname);
+	// 		if ($result) {
+	// 			$response["result"] = "success";
+	// 			$response["message"] = urlencode("获取职位信息成功");
+	// 			$response["searchJob"] = $result;
+	// 			return urldecode(json_encode($response));
+	// 		}
+	// 		else {
+	// 			$response["result"] = "failure";
+	// 			$response["message"] = urlencode("获取职位信息失败");
+	// 			return urldecode(json_encode($response));
+	// 		}
+	// }
 	
 	/**
 	 * 热门兼职
@@ -165,19 +180,19 @@ class Infor extends CI_Controller {
 	 * @return     <json>  
 	 */
 	public function searchJob($jobname) {
-			$result = $this->Infor_model->searchJob($jobname);
+		$result = $this->Infor_model->searchJob($jobname);
 
-			if ($result) {
-				$response["result"] = "success";
-				$response["message"] = urlencode("查询职位成功");
-				$response["searchJob"] = $result;
-				return urldecode(json_encode($response));
-			}
-			else {
-				$response["result"] = "failure";
-				$response["message"] = urlencode("查询职位失败");
-				return urldecode(json_encode($response));
-			}
+		if ($result) {
+			$response["result"] = "success";
+			$response["message"] = urlencode("查询职位成功");
+			$response["searchJob"] = $result;
+			return urldecode(json_encode($response));
+		}
+		else {
+			$response["result"] = "failure";
+			$response["message"] = urlencode("查询职位失败");
+			return urldecode(json_encode($response));
+		}
 	}
 
 	/**
@@ -279,6 +294,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 					exit;
 				}
 			}
+			
 		}
 		else {		
 			echo $fun->getMsgParamNotEmpty();
