@@ -30,7 +30,7 @@ class User extends CI_Controller {
 				return urldecode(json_encode($response));
 			}
 			else {
-				$mail_result = $this->mailer->sendMail($result["email"], $result["temp_password"], 'Register');
+				$mail_result = $this->Mailer->sendMail($result["email"], $result["temp_password"], 'Register');
 
 				if ($mail_result) {
 					$response["result"] = "success";
