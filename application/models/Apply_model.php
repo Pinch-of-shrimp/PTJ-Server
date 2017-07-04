@@ -78,13 +78,15 @@ class Apply_model extends CI_Model {
 			// 新的信息
 			if ($row_count == 0) {
 				$insert_data = array('unique_id' => $user_id,
-									 'job_id' => $job_id);
+									 'job_id' => $job_id,
+									 'applystate' => 0);
 
 				$insert_query = $this->db->insert('employ_request', $insert_data);
 
 				if ($insert_query) {
 					$employApply["unique_id"] = $user_id;
 					$employApply["job_id"] = $job_id;
+					$employApply["applystate"] = 0;
 					return $employApply;
 				}
 				else {
@@ -94,11 +96,13 @@ class Apply_model extends CI_Model {
 			// 信息已经存在
 			else {
 				$update_data = array('unique_id' => $user_id,
-							   		 'job_id' => $job_id);
+							   		 'job_id' => $job_id,
+							   		 'applystate' => 0);
 				$update_query = $this->db->update('employ_request', $update_data);
 				if ($update_query) {
 					$employApply["unique_id"] = $user_id;
 					$employApply["job_id"] = $job_id;
+					$employApply["applystate"] = 0;
 					return $employApply;
 				}
 				else {
