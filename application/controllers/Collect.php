@@ -25,7 +25,7 @@ class Collect extends CI_Controller {
 	}
 
 	public function updateCollection($user_id, $job_id) {
-		$result = $this->Collect_model->updateCollection($province, $city);
+		$result = $this->Collect_model->updateCollection($user_id, $job_id);
 
 		if ($result) {
 			$response["result"] = "success";
@@ -41,7 +41,7 @@ class Collect extends CI_Controller {
 	}
 
 	public function deleteCollection($user_id, $job_id) {
-		$result = $this->Collect_model->deleteCollection($province, $city);
+		$result = $this->Collect_model->deleteCollection($user_id, $job_id);
 
 		if ($result) {
 			$response["result"] = "success";
