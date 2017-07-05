@@ -20,10 +20,10 @@ class JobAnalysis_model extends CI_Model {
 		$query = $this->db->get();
 		if ($query) {
 			foreach ($query->result() as $row) {
-				$jobAnalysis["id"] = $row->url_object_id;
+				$jobAnalysis["job_id"] = $row->url_object_id;
 				$jobAnalysis["url"] = $row->url;
 				$jobAnalysis["title"] = $row->title;
-				$jobAnalysis["slary"] = $row->slary;
+				$jobAnalysis["salary"] = $row->slary;
 				$jobAnalysis["city"] = $row->job_city;
 				$jobAnalysis["require"] = $row->degree_need;
 				$jobAnalysis["type"] = $row->job_type;
