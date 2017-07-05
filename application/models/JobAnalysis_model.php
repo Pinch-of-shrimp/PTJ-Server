@@ -23,7 +23,7 @@ class JobAnalysis_model extends CI_Model {
 				$jobAnalysis["job_id"] = $row->url_object_id;
 				$jobAnalysis["url"] = $row->url;
 				$jobAnalysis["title"] = $row->title;
-				$jobAnalysis["salary"] = $row->slary;
+				$jobAnalysis["salary"] = $row->salary;
 				$jobAnalysis["city"] = $row->job_city;
 				$jobAnalysis["require"] = $row->degree_need;
 				$jobAnalysis["type"] = $row->job_type;
