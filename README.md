@@ -7,8 +7,13 @@ Build status:
 ## Features:
 * Login and register
 * Collaborative Filtering Recommendation
-* Push notification on Android
+* Resume Management
 * ...
+
+## TODO
+* Weixin Login
+* WexinPay/AliPay
+* Push Notification on Android
 
 ## Server Requirements
 
