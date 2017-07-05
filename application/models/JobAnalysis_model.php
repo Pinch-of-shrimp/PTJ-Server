@@ -14,7 +14,7 @@ class JobAnalysis_model extends CI_Model {
 	 * @return     array|boolean  The analysis.
 	 */
 	public function getAnalysis() {
-		$jobAnalysis = array();
+		$result = array();
 		$this->db->select('*');
 		$this->db->from('lagou');
 		$query = $this->db->get();
