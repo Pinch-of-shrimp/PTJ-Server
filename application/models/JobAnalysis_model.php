@@ -32,7 +32,7 @@ class JobAnalysis_model extends CI_Model {
 				$jobAnalysis["companyname"] = $row->company_name;
 				array_push($result, $jobAnalysis);
 			}
-			return $jobAnalysis;
+			return $result;
 		}
 		else {
 			return false;
