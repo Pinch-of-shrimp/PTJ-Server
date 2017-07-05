@@ -43,7 +43,7 @@ class Collect_model extends CI_Model {
 
 		if ($query) {
 			$row_count = $query->num_rows();
-			// 新的信息
+			// 新的收藏信息
 			if ($row_count == 0) {
 				$insert_data = array('unique_id' => $user_id,
 									 'job_id' => $job_id);
@@ -59,7 +59,7 @@ class Collect_model extends CI_Model {
 					return false;
 				}
 			}
-			// 信息已经存在
+			// 收藏信息已经存在
 			else {
 				$update_data = array('unique_id' => $user_id,
 							   		 'job_id' => $job_id);

@@ -71,7 +71,7 @@ class Apply extends CI_Controller {
 	 * 查询申请的职位状态
 	 *
 	 * @param      <string>         $user_id     The user identifier
-	 * @param      <string>         $applyState 职位申请状态，0，2，-1分别代表申请中，申请成功，申请失败
+	 * @param      <string>         $applyState 职位申请状态，2，1，-1分别代表申请中，申请成功，申请失败
 	 *
 	 * @return     <json>  			The apply jobs state.
 	 */
@@ -121,7 +121,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	if (isset($data->operation)) {
 		$operation = $data->operation;
 		if (!empty($operation)) {
-			//终于知道CI推荐使用它封装函数是为啥了 T T
+			// 终于知道CI推荐使用它封装函数是为啥了 T T
+			// 发布职位请求
 			if ($operation == 'applyEmployment') {
 				if(isset($data->jobtitle) && !empty($data->jobtitle) && isset($data->province) && !empty($data->province) && isset($data->city) && !empty($data->city) && isset($data->startdate) && !empty($data->startdate) && isset($data->enddate) && !empty($data->enddate) && isset($data->worktime) && !empty($data->worktime) && isset($data->salary) && !empty($data->salary) && isset($data->salarytype) && !empty($data->salarytype) && isset($data->worktype) && !empty($data->worktype) && isset($data->peoplenumb) && !empty($data->peoplenumb) && isset($data->description) && !empty($data->description) && isset($data->require) && !empty($data->require) && isset($data->workcontent) && !empty($data->workcontent)) {
 					$jobtitle = $data->jobtitle;
@@ -145,7 +146,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 					exit;
 				}
 			}
-
+			// 申请职位请求
 			else if ($operation == 'applyEmploy') {
 				if(isset($data->user_id) && !empty($data->user_id) && isset($data->job_id) && !empty($data->job_id)) {
 					$user_id = $data->user_id;
@@ -158,7 +159,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 					exit;
 				}
 			}
-
+			// 查询申请的职位状态
 			else if ($operation == 'getJobState') {
 				if(isset($data->user_id) && !empty($data->user_id) && isset($data->state) && !empty($data->state)) {
 					$user_id = $data->user_id;

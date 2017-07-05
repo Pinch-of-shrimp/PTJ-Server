@@ -287,6 +287,12 @@ class User_model extends CI_Model {
 		}
 	}
 
+	/**
+	 * 意见反馈
+	 * @param  string $author  作者
+	 * @param  string $content 内容
+	 * @return boolean          
+	 */
 	public function feedback($author, $content) {
 		$data = array('author' => $author, 
 					  'content' => $content);

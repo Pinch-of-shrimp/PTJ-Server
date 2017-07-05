@@ -210,12 +210,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	if (isset($data->operation)) {
 		$operation = $data->operation;
 		if (!empty($operation)) {
-
+			// 全部兼职
 			if ($operation == 'allJob') {
 					echo $fun->allJob();
 					exit;
 				}
-
+			// 热门兼职
 			else if ($operation == 'hotJob') {
 				if(isset($data->city) && !empty($data->city)) {
 					$city = $data->city;
@@ -227,7 +227,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 					exit;
 				}
 			}
-
+			// 附近兼职
 			else if ($operation == 'nearJob') {
 				if(isset($data->province) && !empty($data->province) && isset($data->city) && !empty($data->city)) {
 					$province = $data->province;
@@ -240,7 +240,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 					exit;
 				}
 			}
-
+			// 周末兼职
 			else if ($operation == 'weekendJob') {
 				if(isset($data->province) && !empty($data->province) && isset($data->city) && !empty($data->city)) {
 					$province = $data->province;
@@ -253,7 +253,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 					exit;
 				}
 			}
-
+			// 推荐兼职
 			else if ($operation == 'recommendJob') {
 				if(isset($data->province) && !empty($data->province) && isset($data->city) && !empty($data->city) && isset($data->worktype) && !empty($data->worktype)) {
 					$province = $data->province;
@@ -267,7 +267,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 					exit;
 				}
 			}
-
+			// 查找兼职
 			else if ($operation == 'searchJob') {
 				if(isset($data->jobname) && !empty($data->jobname)) {
 					$jobname = $data->jobname;

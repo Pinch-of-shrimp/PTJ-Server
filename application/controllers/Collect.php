@@ -110,7 +110,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	if (isset($data->operation)) {
 		$operation = $data->operation;
 		if (!empty($operation)) {
-
+			// 查询我的收藏
 			if ($operation == 'searchCollection') {
 				if(isset($data->user_id) && !empty($data->user_id)) {
 					$user_id = $data->user_id;
@@ -122,7 +122,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 					exit;
 				}
 			}
-
+			// 更新我的收藏
 			else if ($operation == 'updateCollection') {
 				if(isset($data->user_id) && !empty($data->user_id) && isset($data->job_id) && !empty($data->job_id)) {
 					$user_id = $data->user_id;
@@ -135,7 +135,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 					exit;
 				}
 			}
-
+			// 删除我的收藏
 			else if ($operation == 'deleteCollection') {
 				if(isset($data->user_id) && !empty($data->user_id) && isset($data->job_id) && !empty($data->job_id)) {
 					$user_id = $data->user_id;

@@ -8,6 +8,25 @@ class Apply_model extends CI_Model {
 		$this->load->database();
 	}
 
+	/**
+	 * 发布职位请求
+	 *
+	 * @param      <string>  $jobtitle     招聘标题
+	 * @param      <string>  $province     招聘省份
+	 * @param      <string>  $city         招聘城市
+	 * @param      <string>  $startdate    开始时间
+	 * @param      <string>  $enddate      截止时间
+	 * @param      <string>  $worktime     工作时间/天
+	 * @param      <string>  $salary       工作薪水/小时
+	 * @param      <string>  $salarytype   薪水结算方式/日/月
+	 * @param      <string>  $worktype     工作类型
+	 * @param      <string>  $peoplenumb   招聘人数
+	 * @param      <string>  $description  职位描述
+	 * @param      <string>  $require      职位要求
+	 * @param      <string>  $workcontent  工作内容
+	 *
+	 * @return     <boolean>  
+	 */
 	public function applyEmployment($jobtitle, $province, $city, $startdate, $enddate, $worktime, $salary, $salarytype, $worktype, $peoplenumb, $description, $require, $workcontent) {
 		$jobData = array('er_jobtitle' => $jobtitle,
 						 'er_province' => $province,
@@ -29,7 +48,7 @@ class Apply_model extends CI_Model {
 
 		if ($query) {
 			$row_count = $query->num_rows();
-			// 新的信息
+			// 新的申请信息
 			if ($row_count == 0) {
 
 				$insert_query = $this->db->insert('employment_request', $jobData);
@@ -41,7 +60,7 @@ class Apply_model extends CI_Model {
 					return false;
 				}
 			}
-			// 信息已经存在
+			// 申请信息已经存在
 			else {
 
 				$update_query = $this->db->update('employment_request', $jobData);

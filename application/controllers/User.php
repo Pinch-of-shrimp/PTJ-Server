@@ -12,7 +12,7 @@ class User extends CI_Controller {
 	/**
 	 * 注册请求响应
 	 * @param  string $email 
-	 * @return string(json) 注: HTTP通信中并不存在所谓的json，而是将string转成json罢了        
+	 * @return json (注: HTTP通信中并不存在所谓的json，而是将string转成json罢了)       
 	 */
 	public function registerRequest($email) {
 
@@ -52,7 +52,7 @@ class User extends CI_Controller {
 	 * @param  string $email    
 	 * @param  string $password 
 	 * @param  string $code     邮箱收到的验证码
-	 * @return string(json)          
+	 * @return json         
 	 */
 	public function registerUser($name, $email, $password, $code) {
 
@@ -87,7 +87,7 @@ class User extends CI_Controller {
 	 * 用户登录响应
 	 * @param  string $email    
 	 * @param  string $password 
-	 * @return string(json)           
+	 * @return json         
 	 */
 	public function loginUser($email, $password) {
 
@@ -124,7 +124,7 @@ class User extends CI_Controller {
 	 * @param  string $old_password        
 	 * @param  string $new_password        
 	 * @param  string $new_password_verify 
-	 * @return string(json)                      
+	 * @return json                      
 	 */
 	public function changePassword($email, $old_password, $new_password, $new_password_verify) {
 		if ($new_password_verify == $new_password) {
@@ -163,7 +163,7 @@ class User extends CI_Controller {
 	/**
 	 * 重设密码请求响应
 	 * @param  string $email 
-	 * @return string(json)        
+	 * @return json        
 	 */
 	public function resetPasswordRequest($email) {
 
@@ -202,7 +202,7 @@ class User extends CI_Controller {
 	 * @param  string $email    
 	 * @param  string $password 
 	 * @param  string $code     邮箱收到的验证码
-	 * @return string(json)
+	 * @return json
 	 */
 	public function resetPassword($email, $password, $code) {
 
@@ -227,6 +227,12 @@ class User extends CI_Controller {
 		}
 	}
 
+	/**
+	 * 意见反馈
+	 * @param  string $author  作者
+	 * @param  string $content 内容
+	 * @return json          
+	 */
 	public function feedback($author, $content) {
 		$result = $this->User_model->feedback($author, $content);
 
@@ -292,11 +298,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	if (isset($data->operation)) {
 		$operation = $data->operation;
 		if (!empty($operation)) {
+			// 注册请求响应
 			if ($operation == 'registerReq') {
 				if(isset($data->user) && !empty($data->user) &&isset($data->user->email)){
 					$user = $data->user;
 					$email = $user->email;
-
 					if ($fun->isEmailValid($email)) {
 						echo $fun->registerRequest($email);
 						exit;
@@ -311,7 +317,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 					exit;
 				}
 			}
-
+			// 注册用户
 			else if ($operation == 'registerUser') {
 				if(isset($data->user) && !empty($data->user) && isset($data->user->name) && !empty($data->user->name) && isset($data->user->email) && isset($data->user->password) && isset($data->user->code)) {
 					$user = $data->user;
@@ -327,7 +333,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 					exit;
 				}
 			}
-
+			// 登录验证
 			else if ($operation == 'login') {
 				if(isset($data->user) && !empty($data->user) && isset($data->user->email) && isset($data->user->password)) {
 					$user = $data->user;
@@ -341,7 +347,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 					exit;
 				}
 			}
-
+			// 修改密码
 			else if ($operation == 'chgPass') {
 				if(isset($data->user) && !empty($data->user) && isset($data->user->email) && isset($data->user->old_password) && isset($data->user->new_password)) {
 					$user = $data->user;
@@ -358,7 +364,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 					exit;
 				}
 			}
-
+			// 重置密码请求
 			else if ($operation == 'resPassReq') {
 				if(isset($data->user) && !empty($data->user) &&isset($data->user->email)){
 					$user = $data->user;
@@ -371,7 +377,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 					exit;
 				}
 			}
-
+			// 重置密码
 			else if ($operation == 'resPass') {
 				if(isset($data->user) && !empty($data->user) && isset($data->user->email) && isset($data->user->password) && isset($data->user->code)) {
 					$user = $data->user;
@@ -386,7 +392,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 					exit;
 				}
 			}
-
+			// 意见反馈
 			else if ($operation == 'feedback') {
 				if (isset($data->author) && !empty($data->author) && isset($data->content) && !empty($data->content)) {
 					$author = $data->author;

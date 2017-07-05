@@ -64,22 +64,6 @@ class Resume extends CI_Controller {
 		}
 	}
 
-	// public function deleteCollection($user_id, $job_id) {
-	// 	$result = $this->Collect_model->deleteCollection($user_id, $job_id);
-
-	// 	if ($result) {
-	// 		$response["result"] = "success";
-	// 		$response["message"] = urlencode("删除我的收藏成功");
-	// 		$response["deleteCollection"] = $result;
-	// 		return urldecode(json_encode($response));
-	// 	}
-	// 	else {
-	// 		$response["result"] = "failure";
-	// 		$response["message"] = urlencode("删除我的收藏失败");
-	// 		return urldecode(json_encode($response));
-	// 	}
-	// }
-
 	/**
 	 * Gets the message parameter not empty.
 	 *
@@ -110,7 +94,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	if (isset($data->operation)) {
 		$operation = $data->operation;
 		if (!empty($operation)) {
-
+			// 获取简历
 			if ($operation == 'getResume') {
 				if(isset($data->user_id) && !empty($data->user_id)) {
 					$user_id = $data->user_id;
@@ -122,7 +106,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 					exit;
 				}
 			}
-
+			// 简历信息
 			else if ($operation == 'updateResume') {
 				if(isset($data->user_id) && !empty($data->user_id) && isset($data->name) && !empty($data->name) && isset($data->sex) && !empty($data->sex) && isset($data->birthday) && !empty($data->birthday) && isset($data->isStudent) && !empty($data->isStudent) && isset($data->realname) && !empty($data->realname)) {
 					$user_id = $data->user_id;
@@ -131,7 +115,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 					$birthday = $data->birthday;
 					$isStudent = $data->isStudent;
 					$realname = $data->realname;
-
 					$school = $data->school;
 					$major = $data->major;
 					$eduStartDate = $data->eduStartDate;
@@ -145,7 +128,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 					exit;
 				}
 			}
-
 		}
 		else {		
 			echo $fun->getMsgParamNotEmpty();
